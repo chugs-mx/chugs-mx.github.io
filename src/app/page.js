@@ -1,4 +1,4 @@
-import Image from "next/image";
+import CustomAppBar from './CustomAppBar';
 
 export default function Home() {
   return (
@@ -11,8 +11,8 @@ export default function Home() {
         </aside>
 
     {/* Header */}
-        <header className="bg-white h-16 flex justify-between items-center px-4 border-b ">
-        <div className="flex gap-4 items-center"></div>
+        <header className="h-16 flex justify-between items-center px-4 border-b  bg-background">
+        <CustomAppBar />
         </header>
 
     {/* Page content */}
