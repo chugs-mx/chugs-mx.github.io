@@ -3,49 +3,89 @@ import { Label } from "@/components/ui/label"
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
 
-function Page(){
-    return(
+function Page() {
+    return (
         <>
-        <div className="flex justify-center flex-col items-center min-h-screen relative bg-[url('/login/mobile_backgoround.webp')] bg-cover bg-center">
-            <Image 
-                src="/login/chug-logo.webp" 
-                alt="CHUG'S logo" 
-                width={300} 
-                height={100} 
-                className="absolute top-[50px]"
-            />
-            <Image 
-                src="/login/chug-cat.webp" 
-                alt="Logo gatito" 
-                width={220} 
-                height={80} 
-                className="absolute top-[120px] z-20"
-            />
-        <div className="relative w-[343px] p-6 bg-white shadow-md z-30" //bg-[#FCEED7]
-            style={{ 
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                WebkitMaskImage: "url('/login/mobile_mask.svg')", 
-                maskImage: "url('/login/mobile_mask.svg')", 
-                WebkitMaskRepeat: "no-repeat",
-                maskRepeat: "no-repeat",
-                WebkitMaskSize: "contain",
-                maskSize: "contain" 
-            }}>
-            <h2 className="flex justify-center text-3xl font-bold text-orange-600">LOGIN</h2>
-                <Label htmlFor={"user"} className={"text-md ml-2"}>Usuario</Label>
-                <Input type={"text"}  id="user" className={"w-full bg-input h-[35px] mt-1 rounded-md"}/>
-                <Label htmlFor={"user"} className={"text-md ml-2"}>Contraseña</Label>
-                <Input type={"text"}  id="user"  className={"w-full bg-input h-[35px] mt-1 rounded-md"} />
-                    <div className="flex justify-end mt-2 mb-[15px]">
-                         <Label  className={"text-sm text-right justify-self-end"}>Olvidé mi contraseña</Label>
+            <div className="h-svh">
+                <div className="flex flex-col h-full justify-center items-center">
+                    <HeaderLogin />
+                    <div className="flex flex-col">
+                        <Image
+                            src="/login/chug-cat.webp"
+                            alt="Logo gatito"
+                            width={220}
+                            height={80}
+                            className="
+                                w-1/2
+                                mx-auto"
+                        />
+                        <div className="
+                                bg-[url('/login/mobile_mask.webp')]
+                                bg-no-repeat
+                                bg-contain
+                                drop-shadow-card
+                                grow
+                                "
+                        >
+                            <div className="
+                        bg-primary
+                        [mask-image:url('/login/mobile_mask.svg')]
+                        [mask-repeat:no-repeat]
+                        [mask-size:contain]
+                        [mask-position:center]
+                        "
+                            >
+                                <h1 className="">LOGIN</h1>
+                                <Label htmlFor={"user"} className={""}>Usuario</Label>
+                                <Input type={"text"} id="user" className={"w-full bg-input h-[20px] mt-1 rounded-md"} />
+                                <Label htmlFor={"user"} className={""}>Contraseña</Label>
+                                <Input type={"text"} id="user" className={""} />
+                                <div className="">
+                                    <Label className={""}>Olvidé mi contraseña</Label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-        </div>
-        <button className="mt-[20px] w-[343px] h-[60px] bg-[#fde2c8] text-orange-600 font-bold text-xl rounded-2xl shadow-md">
-            Ingresar
-        </button>
-        </div>       
+                </div>
+            </div>
+
         </>
     );
+}
+
+function LoginBtn() {
+    return (
+        <button className="mt-[20px] py-3 px-5  bg-primary text-primary-foreground font-bold text-xl rounded-2xl shadow-black/50 shadow-xl">
+            Ingresar
+        </button>
+    )
+}
+
+function HeaderLogin() {
+    return (
+        <header
+            className="
+                        {/*bg-[url('/login/chug-logo.webp')]*/}
+                        bg-no-repeat
+                        bg-cover
+                        bg-center
+                        p-5
+                        relative
+                        mb-10
+                    "
+            style={{
+                backgroundImage: 'linear-gradient(to right, rgba(252,239,217,0.9) 0 100%), url("/login/chug-logo.webp")',
+            }}
+        >
+            <Image
+                src="/login/chug-logo.webp"
+                alt="CHUG'S logo"
+                width="300"
+                height={100}
+                className="w-11/12 p-1 mx-auto"
+            />
+        </header>
+    )
 }
 
 export default Page;
