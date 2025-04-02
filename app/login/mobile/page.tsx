@@ -27,22 +27,29 @@ function Page() {
                                 grow
                                 "
                         >
-                            <div className="
+                        <div className="
                         bg-primary
                         [mask-image:url('/login/mobile_mask.svg')]
                         [mask-repeat:no-repeat]
                         [mask-size:contain]
                         [mask-position:center]
+                        min-h-[100px] /* Ajusta según necesites */
+    flex                flex-col gap-1 p-2 grow
                         "
                             >
-                                <h1 className="">LOGIN</h1>
-                                <Label htmlFor={"user"} className={""}>Usuario</Label>
-                                <Input type={"text"} id="user" className={"w-full bg-input h-[20px] mt-1 rounded-md"} />
-                                <Label htmlFor={"user"} className={""}>Contraseña</Label>
-                                <Input type={"text"} id="user" className={""} />
-                                <div className="">
-                                    <Label className={""}>Olvidé mi contraseña</Label>
+                                <div className="flex flex-col gap-1 px-6 py-4">
+                                    <h1 className="text-center text-3xl font-bold text-primary-foreground">LOGIN</h1>
+                                    <Label htmlFor={"user"} className={"text-sm text-primary-foreground"}>Usuario</Label>
+                                    <Input type={"text"} id="user" className={"w-full bg-input h-[10px] rounded-md p-2"} />
+                                    <Label htmlFor={"password"} className={"text-sm text-primary-foreground"}>Contraseña</Label>
+                                    <Input type={"text"} id="password" className={"w-full bg-input h-[10px] rounded-md p-2"} />
+                                    <div className="text-right text-xs cursor-pointer">
+                                        <Label className={"flex justify-end text-primary-foreground mt-1"}>Olvidé mi contraseña</Label>
+                                    </div>
                                 </div>
+                            </div>
+                            <div className="mt-5 w-full flex justify-center">
+                                <LoginBtn />
                             </div>
                         </div>
                     </div>
@@ -55,7 +62,7 @@ function Page() {
 
 function LoginBtn() {
     return (
-        <button className="mt-[20px] py-3 px-5  bg-primary text-primary-foreground font-bold text-xl rounded-2xl shadow-black/50 shadow-xl">
+        <button className="mt-[20px] py-3 px-5  bg-primary text-primary-foreground font-bold text-xl rounded-2xl shadow-2xl">
             Ingresar
         </button>
     )
@@ -74,7 +81,7 @@ function HeaderLogin() {
                         mb-10
                     "
             style={{
-                backgroundImage: 'linear-gradient(to right, rgba(252,239,217,0.9) 0 100%), url("/login/chug-logo.webp")',
+                backgroundImage: 'linear-gradient(to right, rgba(252,239,217,0.9) 0 100%), url("/login/chug-logo.webp" ',
             }}
         >
             <Image
