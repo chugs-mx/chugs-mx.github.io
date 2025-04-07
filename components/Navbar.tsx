@@ -11,17 +11,18 @@ const Navbar = () => {
     <>
     <button 
         onClick={() => setIsOpen(!isOpen)} 
-        className="fixed top-4 left-0 z-50 md:hidden bg-primary p-3 rounded-br-lg shadow-black/30 shadow-xl"
+        className="fixed top-4 left-0 z-50 md:hidden bg-primary p-3 shadow-black/30 shadow-xl rounded-br-lg"
       >
-        <Image src={"/nav/burguerBar_icon.webp"} alt="Menu" width={40} height={40}  />
+        <Image src={"/nav/burguerBar_icon.webp"} alt="Menu" width={40} height={40}/>
     </button>
+
 
       <nav  className={`fixed top-15 left-0 h-full bg-primary  shadow-black/50 shadow-xl flex flex-col items-start py-6 px-6 rounded-tr-lg transition-all duration-300 
           ${isOpen ? "w-50" : "w-0 hidden "} md:w-25 md:flex md:top-35`}>
           
           <div className='flex flex-col gap-6'>
          
-            <div className={`flex items-center gap-2 cursor-pointer ${isOpen ? "border-b border-primary-foreground pb-2" : ""}`}>
+            <div className={`flex items-center gap-2 cursor-pointer  ${isOpen ? "border-b border-primary-foreground pb-2" : ""}`}>
               <Image src={"/nav/home_icon.webp"} alt="Home" width={30} height={30}/>
               {isOpen && <span className='text-primary-foreground md:hidden'>Home</span>}
             </div>
