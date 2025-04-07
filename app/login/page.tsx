@@ -2,6 +2,8 @@ import React from 'react';
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Image from 'next/image';
+import {signIn} from "@/auth";
+import {Button} from "@/components/ui/button";
 
 function Page() {
     return (
@@ -26,19 +28,30 @@ function LoginDesktop() {
             bg-no-repeat bg-contain bg-bottom
 
             ">
-            <div className="flex flex-col gap-2 min-w-[417]">
-                <Image src={"/login/chug-logo.webp"} width={417} height={2} alt={"Logo"} className={"w-[396] mb-6"} />
-                <Label htmlFor={"user"} className={"text-3xl ml-3"}>Usuario</Label>
-                <Input type={"text"} id="user" className={" bg-input h-[40]"} />
+            <form
+                action={async (formData: FormData) => {
+                    "use server";
+                    await signIn("credentials", formData);
+                }}
+            >
+                <div className="flex flex-col gap-2 min-w-[417]">
+                    <Image src={"/login/chug-logo.webp"} width={417} height={2} alt={"Logo"} className={"w-[396] mb-6"} />
+                    <Label htmlFor={"user"} className={"text-3xl ml-3"}>Usuario</Label>
+                    <Input type={"text"} id="user" name={"email"} className={" bg-input h-[40]"} />
 
-                <Label htmlFor={"user"} className={"text-3xl ml-3"}>Contraseña</Label>
+                    <Label htmlFor={"user"} className={"text-3xl ml-3"}>Contraseña</Label>
 
-                <Input type={"text"} id="user" className={"bg-input h-[40]"} />
-                <div className="flex justify-end mb-[217]">
+                    <Input type={"text"} id="user" name={"password"} className={"bg-input h-[40]"} />
+                    <Button
+                        type={"submit"}
+                        className="mt-[20px] py-3 px-5 bg-primary text-primary-foreground font-bold text-xl rounded-2xl shadow-2xl"
+                    >Ingresar</Button>
+                    <div className="flex justify-end mb-[217]">
 
-                    <Label className={"text-lg text-right justify-self-end"}>Olvidé mi contraseña</Label>
+                        <Label className={"text-lg text-right justify-self-end"}>Olvidé mi contraseña</Label>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     )
 }

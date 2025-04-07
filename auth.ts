@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-//deal with passwoed salt and has
+import axios from "axios"
+
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -12,21 +13,28 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 password: {},
             },
             authorize: async (credentials) => {
-                console.log("credentials", credentials)
-                if (credentials.password !== "hola") {
-                    return null;
-                }
+                let user = null;
 
-                const user = await new Promise<{ id: string, name: string, email: string, password: string } | null>((resolve) => {
-                    setTimeout(() => {
-                        resolve({
-                            id: "2", name: "Test User", email: "email", password: "hola"
-                        })
-                    }, 1000)
-                })
+                user = await  getUserFromDB(credentials.email, credentials.password);
                 console.log("user", user)
                 return user
             },
         }),
     ]
 })
+
+// @ts-ignore
+const getUserFromDB = async (email , password) => {
+    try {
+        const res = await axios.get(`http://localhost:8080/users`, {
+            params: {
+                email: email,
+                password: password
+            }
+        })
+        return res.data
+    } catch (error) {
+        console.log("error", error)
+        return null
+    }
+}
