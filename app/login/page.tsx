@@ -2,17 +2,20 @@ import React from 'react';
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Image from 'next/image';
-import { SignIn } from '@/components/sign-in';
-import { SignOut } from '@/components/signOut';
-import UserAvatar from '@/components/user-session';
+import { LoginDesktop as LoginMobile } from "@/app/login/mobile/page";
 
 function Page() {
     return (
         <>
-            <div className="min-h-screen flex justify-center items-center text-primary-foreground min-w-[417] bg-[url(/login/chug-cat.webp)]
-            bg-no-repeat bg-contain bg-bottom
+            <div className="
             ">
-                <LoginDesktop/>
+                <div className="h-svh xs:hidden">
+                    <LoginMobile />
+                </div>
+                <div className="hidden min-h-screen justify-center items-center text-primary-foreground min-w-[417] bg-[url(/login/chug-cat.webp)]
+            bg-no-repeat bg-contain bg-bottom xs:flex">
+                    <LoginDesktop/>
+                </div>
             </div>
         </>
     );
@@ -20,7 +23,7 @@ function Page() {
 
 function LoginDesktop() {
     return (
-        <div className="min-h-screen flex justify-center items-center text-primary-foreground min-w-[417] bg-[url(/login/chug-cat.webp)]
+        <div className="min-h-screen flex justify-center items-center text-primary-foreground min-w-[417]
             bg-no-repeat bg-contain bg-bottom
 
             ">
