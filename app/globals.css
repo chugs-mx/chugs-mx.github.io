@@ -44,7 +44,8 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  --drop-shadow-card: 7px 8px 8px rgba(0, 0, 0, 0.60)
+  --drop-shadow-card: 7px 8px 8px rgba(0, 0, 0, 0.60);
+  --shadow-burger-menu-home: 15px -6px 22px -5px rgba(0,0,0,0.74);
 }
 
 :root {
@@ -85,6 +86,7 @@
   --font-geist-sans: 'Geist Sans', sans-serif;
   --font-geist-mono: 'Poppins', monospace;
 
+  
 }
 
 .dark {

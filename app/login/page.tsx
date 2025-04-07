@@ -20,7 +20,7 @@ function Page() {
 
 function LoginDesktop() {
     return (
-        <div className="min-h-screen flex justify-center items-center text-primary-foreground min-w-[417] bg-[url(/login/chug-cat.webp)]
+        <div className="min-h-screen flex justify-center items-center text-primary-foreground min-w-[417] 
             bg-no-repeat bg-contain bg-bottom
 
             ">
