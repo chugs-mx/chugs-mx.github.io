@@ -6,12 +6,13 @@ import { useState } from "react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const btnClass = isOpen ? "fixed top-4 left-0 z-0 md:hidden bg-primary p-3 shadow-black/0 shadow-xl" : "fixed top-4 left-0 z-0 md:hidden bg-primary p-3 shadow-black/50 shadow-xl rounded-br-lg" ;
 
   return (
     <>
     <button 
         onClick={() => setIsOpen(!isOpen)} 
-        className="fixed top-4 left-0 z-50 md:hidden bg-primary p-3 shadow-black/30 shadow-xl rounded-br-lg"
+        className={`${btnClass}`}
       >
         <Image src={"/nav/burguerBar_icon.webp"} alt="Menu" width={40} height={40}/>
     </button>
