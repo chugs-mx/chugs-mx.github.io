@@ -1,13 +1,11 @@
-import Image from "next/image";
-import {Button} from "@/components/ui/button";
-import Navbar from "@/components/Navbar";
-import Link from "next/link";
-import Topbar from "@/components/Topbar";
+import React from 'react'
 
-export default function Home() {
+const page = () => {
   return (
-    <>
-    <Topbar></Topbar>
-    <Navbar></Navbar></>
-  );
+    <div>
+      
+    </div>
+  )
 }
+
+export default page
