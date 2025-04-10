@@ -1,6 +1,6 @@
-import NextAuth from "next-auth"
+import NextAuth, {CredentialsSignin} from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-//deal with passwoed salt and has
+
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -12,21 +12,31 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 password: {},
             },
             authorize: async (credentials) => {
-                console.log("credentials", credentials)
-                if (credentials.password !== "hola") {
-                    return null;
+                const {email, password } = credentials
+                try {
+                    const res = await fetch(`http://localhost:8080/auth/login?email=${email}&password=${password}`, {
+                        method: 'GET'
+                    })
+                    if (res.status == 200){
+                        const user = await res.json()
+                        if (user) {
+                            return {...user, id: user.userId}
+                        }
+                    }
+                    return null
+                } catch (error) {
+                    return null
                 }
-
-                const user = await new Promise<{ id: string, name: string, email: string, password: string } | null>((resolve) => {
-                    setTimeout(() => {
-                        resolve({
-                            id: "2", name: "Test User", email: "email", password: "hola"
-                        })
-                    }, 1000)
-                })
-                console.log("user", user)
-                return user
             },
         }),
-    ]
+    ],
+    logger: {
+        error( error: Error) {
+            if (error instanceof CredentialsSignin) {
+                console.warn(`[AUTH WARN] CredentialsSignIn failed: ${error.message}`);
+            } else {
+                console.error(error);
+            }
+        },
+    }
 })
