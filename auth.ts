@@ -1,4 +1,4 @@
-import NextAuth from "next-auth"
+import NextAuth, {CredentialsSignin} from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import axios from "axios"
 
@@ -13,28 +13,31 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 password: {},
             },
             authorize: async (credentials) => {
-                let user = null;
-
-                user = await  getUserFromDB(credentials.email, credentials.password);
-                console.log("user", user)
-                return user
+                const {email, password } = credentials
+                try {
+                    const res = await fetch(`http://localhost:8080/auth/login?email=${email}&password=${password}`, {
+                        method: 'GET'
+                    })
+                    if (res.status == 200){
+                        const user = await res.json()
+                        if (user) {
+                            return {...user, id: user.userId}
+                        }
+                    }
+                    return null
+                } catch (error) {
+                    return null
+                }
             },
         }),
-    ]
-})
-
-// @ts-ignore
-const getUserFromDB = async (email , password) => {
-    try {
-        const res = await axios.get(`http://localhost:8080/users`, {
-            params: {
-                email: email,
-                password: password
+    ],
+    logger: {
+        error( error: Error) {
+            if (error instanceof CredentialsSignin) {
+                console.warn(`[AUTH WARN] CredentialsSignIn failed: ${error.message}`);
+            } else {
+                console.error(error);
             }
-        })
-        return res.data
-    } catch (error) {
-        console.log("error", error)
-        return null
+        },
     }
-}
+})
