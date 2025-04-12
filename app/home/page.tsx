@@ -13,30 +13,10 @@ const page = () => {
     </div>
 
 
-    <div className="min-h-screen flex flex-col  justify-center items-center bg-contain bg-center py-6">
-        <div className="bg-primary-foreground text-background  rounded-xl p-4 flex flex-row gap-4 text-center">
-            <div className="flex flex-col items-center justify-center">
-            <Image src="/icons/clock.webp" alt="Pendientes" width={40} height={40} />
-            <p className="text-2xl font-bold mt-2">2</p>
-            <p className="text-sm">Órdenes pendientes</p>
-            </div>
-            <div className="flex flex-col items-center justify-center">
-            <Image src="/icons/complete.webp" alt="Completas" width={40} height={40} />
-            <p className="text-2xl font-bold mt-2">18</p>
-            <p className="text-sm">Órdenes completas</p>
-            </div>
-            <div className="flex flex-col items-center justify-center">
-            <Image src="/icons/cancel.webp" alt="Canceladas" width={40} height={40} />
-            <p className="text-2xl font-bold mt-2">7</p>
-            <p className="text-sm">Órdenes canceladas</p>
-            </div>
-        </div>
-
-        
-        <div className="max-w-3xl w-full grid grid-cols-1 md:grid-cols-3 gap-2 mb-2 py-2">
-            <div className="bg-primary-foreground text-background rounded-xl p-4 md:col-span-2">
-                <h2 className="text-xl md:text-2xl font-bold mb-4">Ordenes recientes</h2>
-                <div className="space-y-4">
+    <div className="flex flex-col md:flex-row justify-center gap-6 px-30 py-6">
+        <div className="bg-primary-foreground text-background rounded-xl p-4 w-full md:w-1/2 h-fit">
+            <h2 className="text-xl md:text-2xl font-bold mb-4">Ordenes recientes</h2>
+                <div className="space-y-4 max-h-64 overflow-y-auto pr-6 scroll-beige">
                 {[
                     { producto: "Hamburguesa", mesa: "Mesa 3", fecha: "27.12.2024 - 14:58:07", estado: "Listo", color: "bg-green-600" },
                     { producto: "Papas", mesa: "Mesa 14", fecha: "27.12.2024 - 14:58:07", estado: "En espera", color: "bg-lime-500" },
@@ -51,57 +31,84 @@ const page = () => {
                         </div>
                     </div>
                     <div className="flex flex-col md:items-end">
-                        <span className={`text-background px-3 py-1 rounded-full text-sm ${orden.color}`}>{orden.estado}</span>
+                        <span className={`text-background px-11 py-1 rounded-full text-sm ${orden.color}`}>{orden.estado}</span>
                         <p className="text-sm">{orden.fecha}</p>
                     </div>
                     </div>
                 ))}
                 </div>
+        </div>
+
+        <div className="flex flex-col gap-4 w-full md:w-2/4"> 
+            <div className="bg-primary-foreground text-background rounded-xl p-4 flex flex-row gap-4 text-center justify-around">
+                <div className="flex flex-col items-center justify-center text-center">
+                <Image src="/icons/clock.webp" alt="Pendientes" width={60} height={60} />
+                <div className='grid grid-cols-2 items-center gap-x-1'>
+                    <p className="text-3xl font-bold leading-none col-span-1">2</p>
+                    <p className="text-sm col-span-1">Órdenes pendientes</p>
+                </div>
+                </div>
+                <div className="flex flex-col items-center justify-center">
+                <Image src="/icons/complete.webp" alt="Completas" width={60} height={60} />
+                <div className='grid grid-cols-2'>
+                    <p className="text-3xl font-bold">18</p>
+                    <p className="text-sm">Órdenes completas</p>
+                </div>
+                </div>
+                <div className="flex flex-col items-center justify-center">
+                <Image src="/icons/cancel.webp" alt="Canceladas" width={60} height={60} />
+                <div className='grid grid-cols-2'>
+                    <p className="text-3xl font-bold ">7</p>
+                    <p className="text-sm">Órdenes canceladas</p>
+                </div>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="bg-primary-foreground rounded-xl text-background p-2">
+                    <h1 className="font-semibold text-2xl">Ventas</h1>
+                    <p className='font-extralight text-sm'>año 2024</p>
+                    <Image src="/icons/sales_year.webp" alt="Ventas" width={60} height={60} />
+                    <p className="text-sm text-green-500 flex justify-end">+16.0%</p>
+                    <p className="italic flex justify-end">$1,345,832.00</p>
+                </div>
+                <div className="bg-primary-foreground rounded-xl text-background p-2">
+                    <h1 className="font-semibold text-2xl">Ganancia total</h1>
+                    <p className='font-extralight text-sm'>semana pasada</p>
+                    <Image src="/icons/gains.webp" alt="Ventas" width={60} height={60} />
+                    <p className="text-sm text-red-800 flex justify-end">-12.3%</p>
+                    <p className="italic flex justify-end">$18,350.20</p>
+                </div>
+                <div className="bg-primary-foreground  rounded-xl text-background p-2">
+                    <h1 className="font-semibold text-2xl">Total de ventas</h1>
+                    <p className='font-extralight text-sm'>semana pasada</p>
+                    <Image src="/icons/sales.webp" alt="Ventas" width={60} height={60} />
+                    <p className="text-sm text-green-500 flex justify-end">+16.0%</p>
+                    <p className="italic flex justify-end">$45,347.70</p>
+                </div>
+            </div>
+
+            <div className="bg-primary-foreground text-background rounded-3xl px-1 py-8 flex flex-col md:flex-row justify-between items-center gap-6 divide-y md:divide-y-0 md:divide-x divide-[2px]">
+                <div className="flex items-center gap-2 px-4">
+                <Image src="/icons/piechart.webp" alt="Ventas" width={30} height={30} />
+                <p className="text-xl md:text-2xl font-semibold">275 Ventas</p>
+                </div>
+                <div className="flex items-center gap-2 px-4">
+                <Image src="/icons/customers.webp" alt="Clientes" width={30} height={30} />
+                <p className="text-xl md:text-2xl font-semibold">1478 Clientes</p>
+                </div>
+                <div className="flex items-center gap-2 px-4">
+                <Image src="/icons/products.webp" alt="Productos" width={30} height={30} />
+                <p className="text-xl md:text-2xl font-semibold">34 Productos</p>
+                </div>
+                <div className="flex items-center gap-2 px-4">
+                <Image src="/icons/money.webp" alt="Ganancia" width={30} height={30} />
+                <p className="text-xl md:text-2xl font-semibold">$9,456 Ganancia</p>
+                </div>
             </div>
         </div>
 
-        <div className="flex flex-col justify-start py-0 px-2">
-            <div className=" max-w-6xl w-full grid grid-cols-1  md:grid-cols-3 gap-4 mb-4">
-                <div className="bg-primary-foreground rounded-xl  text-background p-4">
-                    <h1 className="font-semibold text-lg">Ventas año</h1>
-                    <p>2024</p>
-                    <p className="text-sm text-green-500">+16.0%</p>
-                    <p className="text-2xl font-bold">$1,345,832.00</p>
-                </div>
-                <div className="bg-primary-foreground rounded-xl text-background p-4">
-                    <h1 className="font-semibold text-lg">Ganancia total</h1>
-                    <p>semana pasada</p>
-                    <p className="text-sm text-red-800">-12.3%</p>
-                    <p className="text-2xl font-bold">$18,350.20</p>
-                </div>
-                <div className="bg-primary-foreground  rounded-xl text-background p-4">
-                    <h1 className="font-semibold text-lg">Total de ventas</h1>
-                    <p>semana pasada</p>
-                    <p className="text-sm text-green-500">+16.0%</p>
-                    <p className="text-2xl font-bold">$45,347.70</p>
-                </div>
-            </div>
-        </div>
-
-        <div className="bg-primary-foreground text-background rounded-3xl px-2 py-8 flex flex-col md:flex-row justify-between items-center gap-6 divide-y md:divide-y-0 md:divide-x divide-[2px]">
-            <div className="flex items-center gap-2 px-4">
-            <Image src="/icons/piechart.webp" alt="Ventas" width={30} height={30} />
-            <p className="text-xl md:text-2xl font-semibold">275 Ventas</p>
-            </div>
-            <div className="flex items-center gap-2 px-4">
-            <Image src="/icons/customers.webp" alt="Clientes" width={30} height={30} />
-            <p className="text-xl md:text-2xl font-semibold">1478 Clientes</p>
-            </div>
-            <div className="flex items-center gap-2 px-4">
-            <Image src="/icons/products.webp" alt="Productos" width={30} height={30} />
-            <p className="text-xl md:text-2xl font-semibold">34 Productos</p>
-            </div>
-            <div className="flex items-center gap-2 px-4">
-            <Image src="/icons/money.webp" alt="Ganancia" width={30} height={30} />
-            <p className="text-xl md:text-2xl font-semibold">$9,456 Ganancia</p>
-            </div>
-        </div>
-
+       
     </div>
     <Navbar></Navbar>
     </div>

@@ -131,4 +131,17 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .scroll-beige::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .scroll-beige::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scroll-beige::-webkit-scrollbar-thumb {
+    background-color: var(--background);
+    border-radius: 8px;
+  }
 }
