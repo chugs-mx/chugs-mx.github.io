@@ -33,12 +33,6 @@ const Topbar = () => {
                 <Image src={"/nav/user_icon.webp"} alt="User icon" width={30} height={30}/>
             </div>
         </nav>
-
-        {/* Logo mobile */}
-        <div className="flex justify-center md:hidden mt-20">
-            <Image src={"/nav/chug-cat.webp"} alt='Cat Logo' width={250} height={200} className="mt-2"/>
-        </div>
-
     </div>
     )
 }

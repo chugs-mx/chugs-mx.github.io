@@ -3,37 +3,46 @@ import Navbar from "@/components/Navbar";
 import Topbar from "@/components/Topbar";
 import Image from 'next/image';
 
-const page = () => {
-    const orders = [
-        {
-            icon: "/icons/clock.webp",
-            alt: "Pendientes",
-            amount: 2,
-            text: "Órdenes pendientes"
-        },
-        {
-            icon: "/icons/complete.webp",
-            alt: "completas",
-            amount: 2,
-            text: "Órdenes completas"
-        },
-        {
-            icon: "/icons/cancel.webp",
-            alt: "canceladas",
-            amount: 2,
-            text: "Órdenes canceladas"
-        },
+const orders = [
+    {
+        icon: "/icons/clock.webp",
+        alt: "Pendientes",
+        amount: 2,
+        text: "Órdenes pendientes"
+    },
+    {
+        icon: "/icons/complete.webp",
+        alt: "completas",
+        amount: 2,
+        text: "Órdenes completas"
+    },
+    {
+        icon: "/icons/cancel.webp",
+        alt: "canceladas",
+        amount: 2,
+        text: "Órdenes canceladas"
+    },
 
-    ]
+]
+const page = () => {
     return (
 
         <div className='min-h-screen bg-[url(/home/background.webp)] bg-cover bg-no-repeat bg-center'>
-
-            <div className=" bg-contain bg-center">
-                <Topbar></Topbar>
+            <Topbar/>
+            {/* main content */}
+            <div className="grid outline outline-blue-700 mt-18 md:mt-0 md:py-4 md:ml-[100px] md:px-10">
+                <div className="outline outline-fuchsia-800 p-2">
+                </div>
             </div>
+            <Navbar/>
+        </div>
 
+    )
+}
 
+const MainContent = () => {
+    return (
+        <>
             <div className="flex flex-col md:flex-row justify-center gap-6 p-30 py-6 z-50">
                 <div className="flex flex-col gap-4 w-full md:w-2/4">
                     <div
@@ -124,7 +133,6 @@ const page = () => {
                 </div>
             </div>
 
-
             <div className="flex flex-col md:flex-row justify-center gap-6 p-30 py-6 z-50">
                 <div
                     className="bg-primary-foreground text-background rounded-3xl px-1 py-8 flex flex-col md:flex-row justify-center items-center gap-6 divide-y md:divide-y-0 md:divide-x divide-[2px]">
@@ -149,11 +157,7 @@ const page = () => {
 
 
             </div>
-
-
-            <Navbar></Navbar>
-        </div>
-
+        </>
     )
 }
 
