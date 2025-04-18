@@ -99,7 +99,7 @@ const MainContent = () => {
 
             
                 <div
-                    className="bg-primary-foreground text-background rounded-xl p-4 py-5 xl:w-1/2 h-fit xl:order-1">
+                    className="bg-primary-foreground text-background rounded-xl p-4 py-5 xl:w-1/2 h-fit xl:order-1 min-h-2.5">
                     <h1 className="text-4xl md:text-4xl font-bold mb-4 -tracking-tighter">Ordenes recientes</h1>
                     <div className="space-y-4 max-h-64 overflow-y-auto pr-6 scroll-beige">
                         {[
@@ -127,10 +127,10 @@ const MainContent = () => {
                         ].map((orden, index) => (
                             <div key={index}
                                  className="border-t pt-2 flex flex-row items-center justify-between gap-1">
-                                <div className="flex items-center gap-4">
-                                    <Image src={`/icons/${orden.producto.toLowerCase()}.webp`} alt={orden.producto}
-                                           width={70} height={70} className='ml-4'/>
-                                    <div className='max-w-[200px] break-words overflow-hidden'>
+                                    <div className="flex items-center gap-4 ">
+                                        <Image src={`/icons/${orden.producto.toLowerCase()}.webp`} alt={orden.producto}
+                                            width={70} height={70} className='ml-4 w-auto h-20'/>
+                                    <div className='max-w-[200px] break-words overflow-hidden '>
                                         <p className="text-2xl font-semibold">{orden.producto}</p>
                                         <p className="text-xl italic font-bold">{orden.mesa}</p>
                                     </div>
@@ -146,46 +146,48 @@ const MainContent = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col xl:flex-row justify-between gap-6 py-6 z-50">
-               
-            </div>
-
-            <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 bg-primary-foreground text-background rounded-3xl px-4 py-8">
-                {[
-                    {
-                        icon: "/icons/piechart.webp",
-                        value: "275",
-                        label: "Ventas"
-                      },
-                      {
-                        icon: "/icons/customers.webp",
-                        value: "1478",
-                        label: "Clientes"
-                      },
-                      {
-                        icon: "/icons/products.webp",
-                        value: "34",
-                        label: "Productos"
-                      },
-                      {
-                        icon: "/icons/money.webp",
-                        value: "$9,456",
-                        label: "Ganancia"
-                      }
-            ].map((item, index) => (
-              <div key={index} className="flex flex-col justify-center p-4 rounded-2xl min-h-[160px]">
-                    <div className='grid grid-cols-2 items-center'>
-                        <p className="font-semibold text-[clamp(30px,2vw,35px)]">{item.value}</p>
-                        <Image src={item.icon} alt={item.label} width={80} height={80} className=' justify-start'/>
-                    </div>
+            <div className="py-4">
+                <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 bg-primary-foreground text-background rounded-3xl px-6 py-4 divide-x ">
+                    {[
+                        {
+                            icon: "/icons/piechart.webp",
+                            value: "275",
+                            label: "Ventas"
+                        },
+                        {
+                            icon: "/icons/customers.webp",
+                            value: "1478",
+                            label: "Clientes"
+                        },
+                        {
+                            icon: "/icons/products.webp",
+                            value: "34",
+                            label: "Productos"
+                        },
+                        {
+                            icon: "/icons/money.webp",
+                            value: "$9,456",
+                            label: "Ganancia"
+                        }
+                    ].map((item, index) => (
+                     <div key={index} className="flex flex-col justify-center min-h-[160px] px-2 divide-y-2 xl:divide-y-0">
+                        <div className='grid grid-cols-2 items-center'>
+                            <div className='grid grid-rows-2'>
+                                <p className="font-semibold text-[clamp(25px,0.5vw,30px)]">{item.value}</p>
+                                <p className="text-2xl xl:text-1xl font-semibold ">{item.label}</p>    
+                            </div>
+                            
+                            <Image src={item.icon} alt={item.label} width={80} height={80} className=' justify-start'/>
+                        </div>
                     
-                
-                    <div className="flex flex-col justify-start">
-                        <p className="text-3xl xl:text-3xl font-semibold">{item.label}</p>    
+                        
+                       
                     </div>
+                    ))}
                 </div>
-            ))}
+            
             </div>
+            
         </>
     )
 }
