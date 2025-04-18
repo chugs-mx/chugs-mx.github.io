@@ -3,30 +3,10 @@ import Navbar from "@/components/Navbar";
 import Topbar from "@/components/Topbar";
 import Image from 'next/image';
 
-const orders = [
-    {
-        icon: "/icons/clock.webp",
-        alt: "Pendientes",
-        amount: 2,
-        text: "Órdenes pendientes"
-    },
-    {
-        icon: "/icons/complete.webp",
-        alt: "completas",
-        amount: 2,
-        text: "Órdenes completas"
-    },
-    {
-        icon: "/icons/cancel.webp",
-        alt: "canceladas",
-        amount: 2,
-        text: "Órdenes canceladas"
-    },
 
-]
 const page = () => {
     return (
-        <div className="outline outline-fuchsia-800 p-2">
+        <div className="outline outline-fuchsia-800 p-2 px-6 lg:flex-row">
             <MainContent/>
         </div>
     )
@@ -35,51 +15,92 @@ const page = () => {
 const MainContent = () => {
     return (
         <>
-            <div className="flex flex-col md:flex-row justify-center gap-6 p-30 py-6 z-50">
-                <div className="flex flex-col gap-4 w-full md:w-2/4">
-                    <div
-                        className="bg-primary-foreground text-background rounded-xl p-4 flex flex-row gap-4 text-center justify-around">
-                        {orders.map((item, index) => (
+            <div className="flex flex-col xl:flex-row justify-center gap-6 z-50">
+                <div className="flex flex-col gap-4 w-full xl:w-1/2">
+                    <div className="bg-primary-foreground text-background rounded-xl p-3 flex flex-row gap-2 text-center justify-around">
+                        {[
+                            {
+                                icon: "/icons/clock.webp",
+                                alt: "Pendientes",
+                                amount: 2,
+                                text: "Órdenes pendientes"
+                            },
+                            {
+                                icon: "/icons/complete.webp",
+                                alt: "completas",
+                                amount: 2,
+                                text: "Órdenes completas"
+                            },
+                            {
+                                icon: "/icons/cancel.webp",
+                                alt: "canceladas",
+                                amount: 2,
+                                text: "Órdenes canceladas"
+                            }].map((item, index) => (
                             <div key={index} className="flex flex-col items-center justify-center text-center">
                                 <Image src={item.icon} alt={item.alt} width={60} height={60}/>
-                                <div className="flex justify-center gap-1 pt-2">
-                                    <p className="text-3xl font-bold text-right">{item.amount}</p>
-                                    <p className="text-sm  text-left">{item.text}</p>
+                                <div className="flex justify-center pt-2">
+                                    <p className="text-3xl font-bold text-left pr-4">{item.amount}</p>
+                                    <p className="text-sm text-left break-words w-1/2">{item.text}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <div className="bg-primary-foreground rounded-xl text-background p-2">
-                            <h1 className="font-semibold text-2xl">Ventas</h1>
-                            <p className='font-extralight text-sm'>año 2024</p>
-                            <Image src="/icons/sales_year.webp" alt="Ventas" width={60} height={60}/>
-                            <p className="text-sm text-green-500 flex justify-end">+16.0%</p>
-                            <p className="italic flex justify-end">$1,345,832.00</p>
-                        </div>
-                        <div className="bg-primary-foreground rounded-xl text-background p-2">
-                            <h1 className="font-semibold text-2xl">Ganancia total</h1>
-                            <p className='font-extralight text-sm'>semana pasada</p>
-                            <Image src="/icons/gains.webp" alt="Ventas" width={60} height={60}/>
-                            <p className="text-sm text-red-800 flex justify-end">-12.3%</p>
-                            <p className="italic flex justify-end">$18,350.20</p>
-                        </div>
-                        <div className="bg-primary-foreground  rounded-xl text-background p-2">
-                            <h1 className="font-semibold text-2xl">Total de ventas</h1>
-                            <p className='font-extralight text-sm'>semana pasada</p>
-                            <Image src="/icons/sales.webp" alt="Ventas" width={60} height={60}/>
-                            <p className="text-sm text-green-500 flex justify-end">+16.0%</p>
-                            <p className="italic flex justify-end">$45,347.70</p>
-                        </div>
+                    <div className="grid grid-cols-3 gap-3">
+                        {[
+
+                            {
+                                title: "Ventas",
+                                date: "Hoy",
+                                icon: "/icons/sales_year.webp",
+                                percentage: "+16.0%",
+                                amount: "$1,345,832.00"
+                            },
+                            {
+                                title: "Ganancia total",
+                                date: "Semana pasada",
+                                icon: "/icons/gains.webp",
+                                percentage: "-12.3%",
+                                amount: "$18,350.20"
+                            },
+                            {
+                                title: "Total de ventas",
+                                date: "Semana pasada",
+                                icon: "/icons/sales.webp",
+                                percentage: "+16.0%",
+                                amount: "$45,347.70"
+                            }
+                        ].map((item, index) => (
+                            <div key={index} 
+                                className="bg-primary-foreground rounded-xl text-background p-4 flex flex-col  justify-between h-52">
+                                <div className="break-words w-full min-w-0 mb-2">
+                                    <h1 className="text-2xl xl:text-xl font-semibold leading-tight overflow-hidden">{item.title}</h1>
+                                    <p className='font-extralight text-sm'>{item.date}</p>
+                                </div>
+                                
+                                <div className="flex items-end justify-between ">
+                                    <Image src={item.icon} alt={item.title} width={60} height={60}/>
+                                    <p className={`text-sm ${item.percentage.startsWith("-") ? "text-red-800" : "text-green-500"}`}>{item.percentage}</p>
+                                </div>
+                               
+                                
+                               
+                               <div className="flex justify-end text-2xl font-light xl:text-xl tracking-wide">
+                                    <p className="italic flex justify-end text-[clamp(18px,2vw,20px)]">{item.amount}</p>
+                               </div>
+                                
+                            </div>
+                        ))}
                     </div>
 
                 </div>
 
 
+            
                 <div
-                    className="bg-primary-foreground text-background rounded-xl p-4 py-10 w-full md:w-1/2 h-fit sm:order-1">
-                    <h2 className="text-xl md:text-2xl font-bold mb-4">Ordenes recientes</h2>
+                    className="bg-primary-foreground text-background rounded-xl p-4 py-5 xl:w-1/2 h-fit xl:order-1">
+                    <h1 className="text-4xl md:text-4xl font-bold mb-4 -tracking-tighter">Ordenes recientes</h1>
                     <div className="space-y-4 max-h-64 overflow-y-auto pr-6 scroll-beige">
                         {[
                             {
@@ -105,19 +126,19 @@ const MainContent = () => {
                             },
                         ].map((orden, index) => (
                             <div key={index}
-                                 className="border-t pt-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                                 className="border-t pt-2 flex flex-row items-center justify-between gap-1">
                                 <div className="flex items-center gap-4">
                                     <Image src={`/icons/${orden.producto.toLowerCase()}.webp`} alt={orden.producto}
-                                           width={40} height={40}/>
-                                    <div>
-                                        <p className="text-lg font-semibold">{orden.producto}</p>
-                                        <p className="italic">{orden.mesa}</p>
+                                           width={70} height={70} className='ml-4'/>
+                                    <div className='max-w-[200px] break-words overflow-hidden'>
+                                        <p className="text-2xl font-semibold">{orden.producto}</p>
+                                        <p className="text-xl italic font-bold">{orden.mesa}</p>
                                     </div>
                                 </div>
-                                <div className="flex flex-col md:items-end">
+                                <div className="flex flex-col items-end w-30">
                                     <span
-                                        className={`text-background px-11 py-1 rounded-full text-sm ${orden.color}`}>{orden.estado}</span>
-                                    <p className="text-sm">{orden.fecha}</p>
+                                        className={`text-background px-11 py-1 rounded-l-lg text-xl text-right pr-1.5 w-40 ${orden.color}`}>{orden.estado}</span>
+                                    <p className="text-2xl w-70 text-right pt-6 tracking-wide">{orden.fecha}</p>
                                 </div>
                             </div>
                         ))}
@@ -125,29 +146,45 @@ const MainContent = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col md:flex-row justify-center gap-6 p-30 py-6 z-50">
-                <div
-                    className="bg-primary-foreground text-background rounded-3xl px-1 py-8 flex flex-col md:flex-row justify-center items-center gap-6 divide-y md:divide-y-0 md:divide-x divide-[2px]">
-                    <div className="flex items-center gap-2 px-4">
-                        <Image src="/icons/piechart.webp" alt="Ventas" width={30} height={30}/>
-                        <p className="text-xl md:text-2xl font-semibold">275 Ventas</p>
-                    </div>
-                    <div className="flex items-center gap-2 px-4">
-                        <Image src="/icons/customers.webp" alt="Clientes" width={30} height={30}/>
-                        <p className="text-xl md:text-2xl font-semibold">1478 Clientes</p>
-                    </div>
-                    <div className="flex items-center gap-2 px-4">
-                        <Image src="/icons/products.webp" alt="Productos" width={30} height={30}/>
-                        <p className="text-xl md:text-2xl font-semibold">34 Productos</p>
-                    </div>
-                    <div className="flex items-center gap-2 px-4">
-                        <Image src="/icons/money.webp" alt="Ganancia" width={30} height={30}/>
-                        <p className="text-xl md:text-2xl font-semibold">$9,456 Ganancia</p>
-                    </div>
+            <div className="flex flex-col xl:flex-row justify-between gap-6 py-6 z-50">
+               
+            </div>
 
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 bg-primary-foreground text-background rounded-3xl px-4 py-8">
+                {[
+                    {
+                        icon: "/icons/piechart.webp",
+                        value: "275",
+                        label: "Ventas"
+                      },
+                      {
+                        icon: "/icons/customers.webp",
+                        value: "1478",
+                        label: "Clientes"
+                      },
+                      {
+                        icon: "/icons/products.webp",
+                        value: "34",
+                        label: "Productos"
+                      },
+                      {
+                        icon: "/icons/money.webp",
+                        value: "$9,456",
+                        label: "Ganancia"
+                      }
+            ].map((item, index) => (
+              <div key={index} className="flex flex-col justify-center p-4 rounded-2xl min-h-[160px]">
+                    <div className='grid grid-cols-2 items-center'>
+                        <p className="font-semibold text-[clamp(30px,2vw,35px)]">{item.value}</p>
+                        <Image src={item.icon} alt={item.label} width={80} height={80} className=' justify-start'/>
+                    </div>
+                    
+                
+                    <div className="flex flex-col justify-start">
+                        <p className="text-3xl xl:text-3xl font-semibold">{item.label}</p>    
+                    </div>
                 </div>
-
-
+            ))}
             </div>
         </>
     )
