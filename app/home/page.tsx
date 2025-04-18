@@ -26,17 +26,9 @@ const orders = [
 ]
 const page = () => {
     return (
-
-        <div className='min-h-screen bg-[url(/home/background.webp)] bg-cover bg-no-repeat bg-center'>
-            <Topbar/>
-            {/* main content */}
-            <div className="grid outline outline-blue-700 mt-18 md:mt-0 md:py-4 md:ml-[100px] md:px-10">
-                <div className="outline outline-fuchsia-800 p-2">
-                </div>
-            </div>
-            <Navbar/>
+        <div className="outline outline-fuchsia-800 p-2">
+            <MainContent/>
         </div>
-
     )
 }
 

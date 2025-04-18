@@ -6,7 +6,7 @@ const Topbar = () => {
     <div className="relative flex flex-col items-center md:flex-row md:justify-between p-4">
 
         <div className="hidden md:block p-2">
-            <Image src="/nav/chug-logo.webp" alt="Logo" width={300} height={220}/>
+            <Image src="/nav/chug-logo.webp" alt="Logo" width={300} height={102}/>
         </div>
 
         <nav className="bg-background shadow-black/30 shadow-xl rounded-bl-2xl p-2 flex items-center gap-6 max-w-[400px]
