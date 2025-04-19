@@ -99,9 +99,9 @@ const MainContent = () => {
 
             
                 <div
-                    className="bg-primary-foreground text-background rounded-xl p-4 py-5 xl:w-1/2 h-fit xl:order-1 min-h-2.5">
+                    className="bg-primary-foreground text-background rounded-xl p-4 py-5 xl:w-1/2 w-full order-1 min-h-3">
                     <h1 className="text-4xl md:text-4xl font-bold mb-4 -tracking-tighter">Ordenes recientes</h1>
-                    <div className="space-y-4 max-h-64 overflow-y-auto pr-6 scroll-beige">
+                    <div className="space-y-2 max-h-64 overflow-y-auto pr-6 scroll-beige">
                         {[
                             {
                                 producto: "Hamburguesa",
@@ -129,9 +129,9 @@ const MainContent = () => {
                                  className="border-t pt-2 flex flex-row items-center justify-between gap-1">
                                     <div className="flex items-center gap-4 ">
                                         <Image src={`/icons/${orden.producto.toLowerCase()}.webp`} alt={orden.producto}
-                                            width={70} height={70} className='ml-4 w-auto h-20'/>
+                                            width={70} height={70} className='ml-4 w-max-20 h-20'/>
                                     <div className='max-w-[200px] break-words overflow-hidden '>
-                                        <p className="text-2xl font-semibold">{orden.producto}</p>
+                                        <p className="text-2xl xl:text-lg font-semibold">{orden.producto}</p>
                                         <p className="text-xl italic font-bold">{orden.mesa}</p>
                                     </div>
                                 </div>
@@ -147,7 +147,7 @@ const MainContent = () => {
             </div>
 
             <div className="py-4">
-                <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 bg-primary-foreground text-background rounded-3xl px-6 py-4 divide-x ">
+                <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 bg-primary-foreground text-background rounded-3xl px-6 py-4 ">
                     {[
                         {
                             icon: "/icons/piechart.webp",
@@ -169,23 +169,36 @@ const MainContent = () => {
                             value: "$9,456",
                             label: "Ganancia"
                         }
-                    ].map((item, index) => (
-                     <div key={index} className="flex flex-col justify-center min-h-[160px] px-2 divide-y-2 xl:divide-y-0">
-                        <div className='grid grid-cols-2 items-center'>
-                            <div className='grid grid-rows-2'>
-                                <p className="font-semibold text-[clamp(25px,0.5vw,30px)]">{item.value}</p>
-                                <p className="text-2xl xl:text-1xl font-semibold ">{item.label}</p>    
+                    ].map((item, index, array) => (
+                        <div 
+                            key={index} 
+                            className="relative flex flex-col justify-center min-h-[160px] px-4"
+                        >
+                            <div className='grid grid-cols-2 items-center'>
+                                <div className='grid grid-rows-2 ps-6  justify-start xl:ps-4'>
+                                    <p className="font-semibold text-[clamp(25px,0.5vw,30px)]">{item.value}</p>
+                                    <p className="text-xl xl:text-2lg font-semibold">{item.label}</p>    
+                                </div>
+                                <Image src={item.icon} alt={item.label} width={80} height={80} className=' justify-end xl:justify-start pl-4'/>
                             </div>
-                            
-                            <Image src={item.icon} alt={item.label} width={80} height={80} className=' justify-start'/>
-                        </div>
                     
-                        
-                       
-                    </div>
+                            {/* Línea vertical mobile */}
+                            {(index === 0 || index === 2) && (
+                                <div className="absolute right-0 top-6 h-[80%] w-[1px] bg-background  xl:hidden"></div>
+                            )}
+
+                            {/* Línea horizontal */}
+                            {(index === 0 || index === 1) && (
+                                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[70%] h-[1px] bg-background  xl:hidden"></div>
+                            )}
+
+                             {/* Línea vertical desktop */}
+                            {index !== 3 && (
+                            <div className="absolute right-0 top-6 h-[80%] w-[1px] bg-background hidden xl:block"></div>
+                            )}
+                        </div>
                     ))}
                 </div>
-            
             </div>
             
         </>
