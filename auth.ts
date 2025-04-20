@@ -2,6 +2,7 @@ import NextAuth, {CredentialsSignin} from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 
 
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
         Credentials({
@@ -9,7 +10,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             // e.g. domain, username, password, 2FA token, etc.
             credentials: {
                 email: {},
-                password: {},
+                password: {}
             },
             authorize: async (credentials, request) => {
                 const {email, password } = credentials
