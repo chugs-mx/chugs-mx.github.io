@@ -48,7 +48,7 @@ const MainContent = () => {
                                 <Image src={item.icon} alt={item.alt} width={60} height={60}/>
                                 <div className="flex justify-center pt-2">
                                     <p className="text-3xl font-bold text-left pr-4">{item.amount}</p>
-                                    <p className="text-sm text-left break-words w-1/2">{item.text}</p>
+                                    <p className=" text-xs sm:text-sm text-left w-1/2">{item.text}</p>
                                 </div>
                             </div>
                         ))}
@@ -80,21 +80,21 @@ const MainContent = () => {
                             }
                         ].map((item, index) => (
                             <div key={index} 
-                                className="bg-primary-foreground rounded-xl text-background p-4 flex flex-col  justify-between h-52">
+                                className="bg-primary-foreground rounded-xl text-background p-4 flex flex-col  justify-between h-45 sm:h-52">
                                 <div className="break-words w-full min-w-0 mb-2">
-                                    <h1 className="text-2xl xl:text-xl font-semibold leading-tight overflow-hidden">{item.title}</h1>
-                                    <p className='font-extralight text-sm'>{item.date}</p>
+                                    <h1 className=" text-md sm:text-2xl xl:text-xl font-semibold leading-tight overflow-hidden">{item.title}</h1>
+                                    <p className='font-extralight text-xs sm:text-sm'>{item.date}</p>
                                 </div>
                                 
                                 <div className="flex items-end justify-between ">
-                                    <Image src={item.icon} alt={item.title} width={60} height={60}/>
+                                    <Image src={item.icon} alt={item.title} width={60} height={60} className='hidden sm:block'/>
                                     <p className={`text-sm ${item.percentage.startsWith("-") ? "text-red-800" : "text-green-500"}`}>{item.percentage}</p>
                                 </div>
                                
                                 
                                
-                               <div className="flex justify-end text-2xl font-light xl:text-xl tracking-wide">
-                                    <p className="italic flex justify-end text-[clamp(18px,2vw,20px)]">{item.amount}</p>
+                               <div className="flex justify-end font-light tracking-wide">
+                                    <p className="italic flex justify-end text-[clamp(14px,2vw,20px)]">{item.amount}</p>
                                </div>
                                 
                             </div>
@@ -149,7 +149,7 @@ const MainContent = () => {
                                         sm:w-40
                                         rounded-l-lg text-xl text-right text-background
                                         ${orden.color}`}>{orden.estado}</span>
-                                    <p className="text-2xl w-70 text-right pt-6 tracking-wide">{orden.fecha}</p>
+                                    <p className="text-sm sm:text-2xl w-70 text-right pt-6 tracking-wide">{orden.fecha}</p>
                                 </div>
                             </div>
                         ))}
@@ -190,7 +190,7 @@ const MainContent = () => {
                                     <p className="font-semibold text-[clamp(25px,0.5vw,30px)]">{item.value}</p>
                                     <p className="text-xl xl:text-2lg font-semibold">{item.label}</p>    
                                 </div>
-                                <Image src={item.icon} alt={item.label} width={80} height={80} className=' justify-end xl:justify-start pl-4'/>
+                                <Image src={item.icon} alt={item.label} width={80} height={80} className=' justify-end xl:justify-start pl-4 hidden sm:block'/>
                             </div>
                     
                             {/* Línea vertical mobile */}
