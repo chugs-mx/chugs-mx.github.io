@@ -19,5 +19,5 @@ export async function loginAction(prevState: any, formData: FormData) {
         console.log("Error en el login", error);
         return {message: "Credenciales inválidas", success: false};
     }
-    redirect("/")
+    redirect("/home")
 }

@@ -2,11 +2,18 @@ import React from 'react'
 import Navbar from "@/components/Navbar";
 import Topbar from "@/components/Topbar";
 import Image from 'next/image';
+import {auth} from "@/auth";
+import { redirect } from "next/navigation";
 
 
-const page = () => {
+const page = async () => {
+    const session = await auth()
+    if (!session || session?.user?.role !== "ADMIN") {
+        redirect("/login");
+    }
+
     return (
-        <div className="outline outline-fuchsia-800 p-2 px-6 lg:flex-row">
+        <div className="p-2 px-6 lg:flex-row">
             <MainContent/>
         </div>
     )
@@ -129,7 +136,7 @@ const MainContent = () => {
                                  className="border-t pt-2 flex flex-row items-center justify-between gap-1">
                                     <div className="flex items-center gap-4 ">
                                         <Image src={`/icons/${orden.producto.toLowerCase()}.webp`} alt={orden.producto}
-                                            width={70} height={70} className='ml-4 w-max-20 h-20'/>
+                                            width={70} height={70} className='ml-4 w-max-20 h-20 hidden sm:block '/>
                                     <div className='max-w-[200px] break-words overflow-hidden '>
                                         <p className="text-2xl xl:text-lg font-semibold">{orden.producto}</p>
                                         <p className="text-xl italic font-bold">{orden.mesa}</p>
@@ -137,7 +144,11 @@ const MainContent = () => {
                                 </div>
                                 <div className="flex flex-col items-end w-30">
                                     <span
-                                        className={`text-background px-11 py-1 rounded-l-lg text-xl text-right pr-1.5 w-40 ${orden.color}`}>{orden.estado}</span>
+                                        className={`
+                                        px-1 py-0.5 sm:px-11 sm:py-1 sm:pr-1.5
+                                        sm:w-40
+                                        rounded-l-lg text-xl text-right text-background
+                                        ${orden.color}`}>{orden.estado}</span>
                                     <p className="text-2xl w-70 text-right pt-6 tracking-wide">{orden.fecha}</p>
                                 </div>
                             </div>

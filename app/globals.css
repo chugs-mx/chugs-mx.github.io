@@ -49,7 +49,7 @@
 
   --shadow-burger-menu-home: 15px -6px 22px -5px rgba(0,0,0,0.74);
 
-  --breakpoint-xs: 30rem;
+  --breakpoint-xs: 440px;
 }
 
 :root {
