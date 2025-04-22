@@ -106,7 +106,7 @@ const MainContent = () => {
 
             
                 <div
-                    className="bg-primary-foreground text-background rounded-xl p-4 py-5 xl:w-1/2 w-full order-1 min-h-3">
+                    className="bg-primary-foreground text-background rounded-xl p-4 py-5 xl:w-1/2 w-full min-h-3 order-first xl:order-none">
                     <h1 className="text-4xl md:text-4xl font-bold mb-4 -tracking-tighter">Ordenes recientes</h1>
                     <div className="space-y-2 max-h-64 overflow-y-auto pr-6 scroll-beige">
                         {[
