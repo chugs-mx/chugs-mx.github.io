@@ -1,6 +1,6 @@
 import NextAuth, {CredentialsSignin} from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-
+import { Roles } from "@/types/roles"
 
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -49,7 +49,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return params.token;
         },
         session: (params) => {
-            params.session.user.role = params.token.role;
+            params.session.user.role = params.token.role as Roles;
             return params.session
         }
     },
