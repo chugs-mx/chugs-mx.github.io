@@ -1,19 +1,21 @@
 "use client"
 import api from "@/app/wrapper/api"
 import {useEffect, useState} from "react"
-const API_URL = "http://localhost:8080/inventories"
 
 export default function () {
     const [items, setItems] = useState([])
 
     useEffect(() => {
-        async function fetchData() {
-            const req = await api.get("inventories")
-            console.log(req)
-            console.log(req.data)
-            setItems(req.data.content)
-        }
-        fetchData()
+        (async function fetchData() {
+            try {
+                const req = await api.get("inventories")
+                console.log(req)
+                console.log(req.data)
+                setItems(req.data.content)
+            } catch (e){
+                console.error(e)
+            }
+        })()
     }, [])
 
 
@@ -27,9 +29,7 @@ export default function () {
                 {items.map((i) =>{
                     const {name} = i;
                     return (
-                        <div key={name}>
-                            <h1 className="text-4xl">{name}</h1>
-                        </div>
+                            <h1 key={name} className="text-4xl">{name}</h1>
                     )
                 } )}
             </div>
