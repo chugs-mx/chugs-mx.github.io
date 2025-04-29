@@ -11,6 +11,7 @@ export const metadata = {
     description: "Administra tu inventario",
 }
 
+
 const page = async (props: {
     searchParams: Promise<
         {

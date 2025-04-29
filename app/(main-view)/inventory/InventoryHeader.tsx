@@ -2,7 +2,7 @@
 import React from "react";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
-import {ArrowBigUp, SearchIcon} from "lucide-react";
+import {SearchIcon} from "lucide-react";
 
 const inventoryEnums = {
     CLUTTER: "Embutidos",

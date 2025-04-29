@@ -30,6 +30,24 @@ interface DataTableProps {
     items?: Object[]
 }
 
+const inventoryEnums = {
+    CLUTTER: "Embutidos",
+    REFRIGERATED: "Refrigerado",
+    CLEANING: "Limpieza",
+    DISPOSABLE: "Desechable",
+    FROZEN: "Congelado",
+
+    INGREDIENT: "Ingrediente",
+    PRODUCT_VARIANT: "Variante de producto",
+    PRODUCT: "Producto",
+    MEAT: "Carne",
+    VEGETABLES: "Verduras",
+    DRINKS: "Bebidas"
+}
+function translateCategory(category: string) {
+    return inventoryEnums[category as keyof typeof inventoryEnums] || category;
+}
+
 function translateMeasureUnit(unitMeasure: string) {
     switch (unitMeasure) {
         case "LTR":
@@ -87,16 +105,42 @@ const DataTable = ({items}: DataTableProps) => {
 
                                     if (column.field === "quantity") {
                                         return (
-                                            <TableCell key={j} className="text-right px-4 py-1 text-sm ">
+                                            <TableCell key={j} className="text-right px-4 py-1 text-base ">
                                                 <span className={cn("text-primary-foreground", column.isNumeric ? "font-bold" : "")}>
                                                     {row.quantity} {translateMeasureUnit(row.unitMeasure)}
                                                 </span>
                                             </TableCell>
                                         )
                                     }
+                                    if (column.field === "unitPrice") {
+                                        return (
+                                            <TableCell key={j} className="text-right px-4 py-1 text-base ">
+                                                <span className={cn("text-primary-foreground", column.isNumeric ? "font-bold" : "")}>
+                                                    ${row.unitPrice}
+                                                </span>
+                                            </TableCell>
+                                        )
+                                    }
+
+                                    if (column.field === "inventoryCategory" || column.field === "subcategory") {
+                                        return (
+                                            <TableCell key={j} className="text-left text-primary-foreground font-medium px-4 py-1 text-base">
+                                                <span>{translateCategory(row[column.field])}</span>
+                                            </TableCell>
+                                        )
+
+                                    }
+
+                                    if (column.field === "entryDate" || column.field === "expiryDate") {
+                                        return (
+                                            <TableCell key={j} className="text-right text-primary-foreground font-medium px-4 py-1 text-base">
+                                                <span>{new Date(row[column.field]).toLocaleDateString("es-MX")}</span>
+                                            </TableCell>
+                                        )
+                                    }
 
                                     return (
-                                        <TableCell key={j} className="text-center text-primary-foreground font-medium px-4 py-1 text-sm">
+                                        <TableCell key={j} className="text-left text-primary-foreground font-medium px-4 py-1 text-base">
                                             <span>{row[column.field]}</span>
                                         </TableCell>
                                     )
