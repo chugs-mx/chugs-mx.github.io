@@ -35,10 +35,10 @@ const page = async (props: {
     const fetchedSubcategories = await fetchSubcategories()
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 min-w-full">
             <InventoryHeader placeholder={"Busca por Nombre, Categoría o Subcategoría"} categories={fetchedCategories} subcategories={fetchedSubcategories} />
-            <ClientInventoriesPage/>
-            <DataTable/>
+            {/*<ClientInventoriesPage/>*/}
+            <DataTable items={fetchedPage.content} />
             {
                 fetchedPage?.page?.totalPages > 1 && (
                     <div className="flex justify-center">
