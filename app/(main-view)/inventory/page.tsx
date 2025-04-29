@@ -36,19 +36,9 @@ const page = async (props: {
 
     return (
         <div className="flex flex-col gap-4">
-            <ClientInventoriesPage/>
             <InventoryHeader placeholder={"Busca por Nombre, Categoría o Subcategoría"} categories={fetchedCategories} subcategories={fetchedSubcategories} />
+            <ClientInventoriesPage/>
             <DataTable/>
-            {fetchedPage?.content?.map((item: any) => (
-                <div key={item.inventoryId} className="border p-4 rounded-lg border-blue-900/40 flex gap-5 justify-evenly">
-                    <h2 className="text-xl font-bold">{item.name}</h2>
-                    <p>Descripción: {item.description}</p>
-                    <p>Precio: {item.unitPrice}</p>
-                    <p>Categoría: {item.inventoryCategory}</p>
-                    <p>Subcategoría: {item.subcategory}</p>
-                    <p>Cantidad: {item.quantity}</p>
-                </div>
-            ))}
             {
                 fetchedPage?.page?.totalPages > 1 && (
                     <div className="flex justify-center">

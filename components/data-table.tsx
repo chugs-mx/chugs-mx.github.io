@@ -21,16 +21,14 @@ const columns = [
     {label:"precio unitario", field: "unitPrice", isNumeric: true},
     {label:"fecha de registro", field: "entryDate"},
     {label:"fecha de caducidad", field: "expiryDate"},
-    {label:"acciones", field: "actions", cell: ({row}: {row:any}) => {
+    {label:"acciones", field: "actions", cell: ({row, i}: {row:any, i:number}) => {
             return (
-                <>
-                    <TableCell>
-                        <div>
-                            <button className="bg-blue-500 text-white px-2 py-1 rounded">Editar</button>
-                            <button className="bg-red-500 text-white px-2 py-1 rounded">Eliminar</button>
-                        </div>
-                    </TableCell>
-                </>
+                <TableCell key={i}>
+                    <div>
+                        <button className="bg-blue-500 text-white px-2 py-1 rounded">Editar</button>
+                        <button className="bg-red-500 text-white px-2 py-1 rounded">Eliminar</button>
+                    </div>
+                </TableCell>
             )
         }
     },
@@ -153,7 +151,7 @@ const rows =
 const DataTable = () => {
     return (
         <>
-            <div className="rounded-md border bg-[#fff3e6] shadow-sm overflow-hidden">
+            <div className="flow-root rounded-md border bg-[#fff3e6] shadow-sm overflow-hidden">
                 <Table>
                     <TableHeader className="bg-primary-foreground text-background ">
                         {/* Renderizar los encabezados de la tabla */}
@@ -176,12 +174,12 @@ const DataTable = () => {
                                 {columns.map((column, j) =>
                                     {
                                         if (column.field == "actions") {
-                                            return column.cell(row)
+                                            return column.cell(row, j)
                                         }
 
                                         return (
                                             <TableCell key={j} className="text-center px-4 py-1 text-sm">
-                                                <span className="font-bold" >{row[column.field]}</span>
+                                                <span>{row[column.field]}</span>
                                             </TableCell>
                                         )
                                     } )
