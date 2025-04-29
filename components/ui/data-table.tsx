@@ -1,7 +1,6 @@
 'use client'
 
 import React from "react";
-import { useState } from "react"; 
 import {
   flexRender,
   getCoreRowModel,
@@ -75,7 +74,7 @@ import {
               </TableRow>
             ))}
           </TableHeader>
-  
+
           <TableBody>
             {table.getRowModel().rows.map((row, rowIndex) => (
               <TableRow
@@ -92,9 +91,9 @@ import {
           </TableBody>
         </Table>
 
-        
+
       </div>
-     
+
 
       <div className="flex justify-between items-center p-4 bg-transparent">
       <div>

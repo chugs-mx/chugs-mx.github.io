@@ -41,11 +41,11 @@ export const columns: ColumnDef<Inventory>[] = [
     header: "Acciones",
     cell: ({ row }) => (
       <div className="flex items-center justify-between p-2">
-        <button className="">
-            <Image 
-                src={"/icons/delete_icon.svg"} 
-                alt="Delete icon" 
-                width={20} 
+        <button>
+            <Image
+                src={"/icons/delete_icon.svg"}
+                alt="Delete icon"
+                width={20}
                 height={20}
             />
         </button>

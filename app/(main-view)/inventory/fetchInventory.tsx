@@ -1,4 +1,4 @@
-import {getInventories} from "@/app/apiSpring/inventory-api";
+import {getInventories, getInventoriesCategories, getInventoriesSubcategories,} from "@/app/apiSpring/inventory-api";
 
 type Inventory = {
     inventoryId: number;
@@ -20,7 +20,7 @@ type InventoryResponse = {
     };
 };
 
-export async function fetchInventory(search?: string, page?: string, pageSize?: string, sort?: string, sortDirection?: string, category?: string, subCategory?: string) : Promise<InventoryResponse>{ {
+export async function fetchInventory(search?: string, page?: string, pageSize?: string, sort?: string, sortDirection?: string, category?: string, subCategory?: string) : Promise<InventoryResponse>{
     try {
         const res = await getInventories(
             {
@@ -46,5 +46,24 @@ export async function fetchInventory(search?: string, page?: string, pageSize?: 
             }
         };
     }
+}
 
+export async function fetchSubcategories() {
+    try {
+        const res = await getInventoriesSubcategories();
+        return res.data;
+    } catch (e) {
+        console.error("Error fetching categories:", e);
+        throw new Error("Error fetching categories");
+    }
+}
+
+export async function fetchCategories() {
+    try {
+        const res = await getInventoriesCategories();
+        return res.data;
+    } catch (e) {
+        console.error("Error fetching categories:", e);
+        throw new Error("Error fetching categories");
+    }
 }

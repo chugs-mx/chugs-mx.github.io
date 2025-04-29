@@ -1,7 +1,10 @@
 import {auth} from "@/auth";
 import {redirect} from "next/navigation";
-import {fetchInventory} from "@/app/(main-view)/inventory/fetchInventory";
+import {fetchCategories, fetchInventory, fetchSubcategories} from "@/app/(main-view)/inventory/fetchInventory";
 import {InventoryHeader} from "@/app/(main-view)/inventory/InventoryHeader";
+import {sort} from "next/dist/build/webpack/loaders/css-loader/src/utils";
+import DataTable from "@/components/data-table";
+import ClientInventoriesPage from "@/app/(main-view)/inventory/ClientInventoriesPage";
 
 export const metadata = {
     title: "Inventario",
@@ -28,10 +31,14 @@ const page = async (props: {
     const searchParams = await props.searchParams;
 
     const fetchedPage = await fetchInventory(searchParams.search, searchParams.page, searchParams.size, searchParams.sort, searchParams.asc, searchParams.category, searchParams.subcategory);
+    const fetchedCategories = await fetchCategories()
+    const fetchedSubcategories = await fetchSubcategories()
 
     return (
         <div className="flex flex-col gap-4">
-            <InventoryHeader placeholder={"Busca por Nombre, Categoría o Subcategoría"}/>
+            <ClientInventoriesPage/>
+            <InventoryHeader placeholder={"Busca por Nombre, Categoría o Subcategoría"} categories={fetchedCategories} subcategories={fetchedSubcategories} />
+            <DataTable/>
             {fetchedPage?.content?.map((item: any) => (
                 <div key={item.inventoryId} className="border p-4 rounded-lg border-blue-900/40 flex gap-5 justify-evenly">
                     <h2 className="text-xl font-bold">{item.name}</h2>

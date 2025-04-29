@@ -4,8 +4,8 @@ const PATH = "/inventories"
 
 type GetInventoriesParams = {
     search?: string | null
-    page?: number | null
-    pageSize?: number | null
+    page?: string | null
+    pageSize?: string | null
     sort?: string | null
     sortDirection?: string | null
     category?: string | null
@@ -14,8 +14,8 @@ type GetInventoriesParams = {
 
 const getInventories = ({
                                   search,
-                                  page = 1,
-                                  pageSize = 10,
+                                  page,
+                                  pageSize,
                                   sort,
                                   sortDirection,
                                   category,
@@ -28,11 +28,12 @@ const getInventories = ({
     if (sortDirection) params.append("asc", sortDirection)
     if (category) params.append("category", category)
     if (subCategory) params.append("subcategory", subCategory)
-    if (page) { page = page -1; }
-    params.append("page", String(page))
-    params.append("size", String(pageSize))
+    if (page) {
+        const pageNumber = Number(page) -1;
+        params.append("page", String(pageNumber < 0 ? 0 : pageNumber))
+    }
+    if (pageSize) params.append("size", String(pageSize))
 
-    console.log(`${PATH}?${params.toString()}`)
     return apiSpring(
         {
             url:`${PATH}?${params.toString()}`,
@@ -41,5 +42,19 @@ const getInventories = ({
     )
 }
 
+const getInventoriesSubcategories = () => {
+    return apiSpring({
+        url: `${PATH}/subcategories`,
+        method: "GET"
+    })
+}
 
-export { getInventories }
+const getInventoriesCategories = () => {
+    return apiSpring({
+        url: `${PATH}/categories`,
+        method: "GET"
+    })
+}
+
+
+export { getInventories, getInventoriesSubcategories, getInventoriesCategories }

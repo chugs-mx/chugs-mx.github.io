@@ -146,7 +146,7 @@ const ClientInventoriesPage = () => {
 
   return (
     <div className="p-2 px-6">
-      <InventoryHeader />
+      <InventoryHeader subcategories={[]} categories={[]}/>
       <DataTable
         columns={columns}
         data={inventories}
