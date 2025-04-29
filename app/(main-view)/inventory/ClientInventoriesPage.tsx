@@ -3,7 +3,7 @@
 import React, {useState} from "react";
 import {DataTable} from "@/components/ui/data-table";
 import {columns} from "@/components/inventories/columns";
-import {InventoryHeader} from "@/app/(main-view)/inventory/InventoryHeader";
+import {ProductHeader} from "@/app/(main-view)/inventory/ProductHeader";
 
 interface Inventory {
   producto: string;
@@ -146,7 +146,7 @@ const ClientInventoriesPage = () => {
 
   return (
     <div className="p-2 px-6 min-w-full">
-      <InventoryHeader subcategories={[]} categories={[]}/>
+      <ProductHeader subcategories={[]} categories={[]}/>
       <DataTable
         columns={columns}
         data={inventories}
