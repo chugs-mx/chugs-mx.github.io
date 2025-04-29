@@ -151,7 +151,7 @@ const rows =
 const DataTable = () => {
     return (
         <>
-            <div className="flow-root rounded-md border bg-[#fff3e6] shadow-sm overflow-hidden">
+            <div className="rounded-md border bg-[#fff3e6] shadow-sm overflow-hidden">
                 <Table>
                     <TableHeader className="bg-primary-foreground text-background ">
                         {/* Renderizar los encabezados de la tabla */}

@@ -145,7 +145,7 @@ const ClientInventoriesPage = () => {
   const pageCount = Math.ceil(inventories.length / pageSize);
 
   return (
-    <div className="p-2 px-6">
+    <div className="p-2 px-6 min-w-full">
       <InventoryHeader subcategories={[]} categories={[]}/>
       <DataTable
         columns={columns}
