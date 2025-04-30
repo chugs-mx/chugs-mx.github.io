@@ -89,7 +89,7 @@ export function InventoryHeader({placeholder = "Buscar", categories, subcategori
     return (
         <>
             <div className="items-start p-2">
-                <h1 className="text-6xl font-bold text-primary-foreground">PRODUCTOS</h1>
+                <h1 className="text-6xl font-bold text-primary-foreground tracking-widest">INVENTARIO</h1>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
                 <div className="flex items-center border border-primary-foreground px-3 py-2 rounded">
