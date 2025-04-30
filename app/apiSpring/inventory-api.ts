@@ -56,5 +56,17 @@ const getInventoriesCategories = () => {
     })
 }
 
+const deleteInventoryById = (id: number) => {
+    return apiSpring({
+        url: `${PATH}/${id}`,
+        method: "DELETE"
+    })
+}
 
-export { getInventories, getInventoriesSubcategories, getInventoriesCategories }
+
+export {
+    getInventories,
+    getInventoriesSubcategories,
+    getInventoriesCategories,
+    deleteInventoryById,
+}

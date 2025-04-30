@@ -5,6 +5,7 @@ import {InventoryHeader} from "@/app/(main-view)/inventory/InventoryHeader";
 import {sort} from "next/dist/build/webpack/loaders/css-loader/src/utils";
 import DataTable from "@/components/data-table";
 import ClientInventoriesPage from "@/app/(main-view)/inventory/ClientInventoriesPage";
+import {Pagination} from "@/app/(main-view)/inventory/Pagination";
 
 export const metadata = {
     title: "Inventario",
@@ -38,8 +39,9 @@ const page = async (props: {
     return (
         <div className="flex flex-col gap-4 min-w-full">
             <InventoryHeader placeholder={"Busca por Nombre, Categoría o Subcategoría"} categories={fetchedCategories} subcategories={fetchedSubcategories} />
-            {/*<ClientInventoriesPage/>*/}
             <DataTable items={fetchedPage.content} />
+            <Pagination pageMeta={fetchedPage.page} />
+
             {
                 fetchedPage?.page?.totalPages > 1 && (
                     <div className="flex justify-center">

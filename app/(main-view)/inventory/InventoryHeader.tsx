@@ -23,7 +23,7 @@ function translateCategory(category: string) {
 }
 
 const fields = {
-    "entryDate": "fecha de registro",
+    "entryDate": "fecha de alta",
     "expiryDate": "fecha de caducidad",
     "inventoryCategory": "categoría",
     "quantity": "cantidad",
