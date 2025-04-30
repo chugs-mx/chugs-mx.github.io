@@ -2,7 +2,9 @@
 import React from "react";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
-import {SearchIcon} from "lucide-react";
+import {Cross, SearchIcon} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const inventoryEnums = {
     CLUTTER: "Embutidos",
@@ -132,16 +134,28 @@ export function InventoryHeader({placeholder = "Buscar", categories, subcategori
             </div>
 
             <div className="flex flex-wrap justify-between items-center w-full gap-2">
-                <select
+                <div className="flex gap-8">
+                    <button className="items-center text-lg text-primary-foreground px-2 py-2 rounded-md flex items-center">
+                        {/*<Image src={"/icons/add_icon.webp"} alt="add" width={20} height={20} className="inline-block mr-2"/>*/}
+                        <Cross className="fill-primary-foreground w-5 h-5 mr-2 stroke-primary-foreground"/>
+                        Agregar Nuevo
+                    </button>
+
+                    <select
                         className="text-xl text-primary-foreground"
                         onChange={(e) => handleFieldChange(e.target.value)}
-                >
+                    >
                         <option value="">Ordenar por</option>
                         {Object.entries(fields).map( ([val, label], i) =>
                             ( <option key={i} value={val}>{label}</option>)
                         )
                         }
-                </select>
+                    </select>
+
+                </div>
+
+
+
 
                 <div className="text-xl font-bold text-primary-foreground mt-2 sm:mt-0">
                     28 enero - 28 febrero
