@@ -2,42 +2,51 @@
 import React from 'react'
 import Image from 'next/image'
 import {useState} from "react";
+import Link from 'next/link'
 
 const menuItems = [
     {
         iconSrc: "/nav/home_icon.webp",
         alt: "Home",
         text: "Home",
+        href: "/home"
     },
     {
         iconSrc: "/nav/order_icon.webp",
         alt: "Órdenes",
         text: "Órdenes",
+         href: "/orders"
     },
     {
         iconSrc: "/nav/tables_icon.webp",
         alt: "Órdenes",
         text: "Mesas",
+        href: "/tables"
     },
     {
         iconSrc: "/nav/add_products_icon.webp",
         alt: "Agregar",
         text: "Agregar",
+        href: "/product"
     },
     {
         iconSrc: "/nav/inventory_icon.webp",
         alt: "Inventario",
         text: "Inventario",
+        href: "/inventory"
     },
     {
         iconSrc: "/nav/metrics_icon.webp",
         alt: "Métricas",
         text: "Métricas",
+        href: "/metrics"
+        
     },
     {
         iconSrc: "/nav/settings_icon.webp",
         alt: "Configuración",
         text: "Configuración",
+        href: "/settings"
     },
 ];
 
@@ -49,11 +58,13 @@ function MenuItems({isOpen}: MenuItemsProps) {
     return <>
         {
             menuItems.map((item, i) => (
-                <div key={i}
-                     className={`flex items-center md:justify-center gap-2 cursor-pointer  `}>
+                <Link 
+                    href={item.href}   
+                    key={i}
+                    className={`flex items-center md:justify-center gap-2 cursor-pointer  `}>
                     <Image src={item.iconSrc} alt={item.alt} width={50} height={50}/>
                     {isOpen && <span className='text-primary-foreground md:hidden'>{item.text}</span>}
-                </div>
+                </Link>
             ))
         }
     </>;
