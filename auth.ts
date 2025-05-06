@@ -1,7 +1,7 @@
 import NextAuth, {CredentialsSignin} from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { Roles } from "@/types/roles"
-import {login} from "@/app/apiSpring/auth-api";
+import {login} from "@/app/api/back/auth-api";
 
 
 

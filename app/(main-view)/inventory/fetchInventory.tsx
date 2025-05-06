@@ -1,4 +1,4 @@
-import {getInventories, getInventoriesCategories, getInventoriesSubcategories, deleteInventoryById} from "@/app/apiSpring/inventory-api";
+import {getInventories, getInventoriesCategories, getInventoriesSubcategories, deleteInventoryById} from "@/app/api/back/inventory-api";
 
 type Inventory = {
     inventoryId: number;

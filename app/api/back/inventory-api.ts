@@ -1,4 +1,4 @@
-import apiSpring from "@/app/apiSpring/back-api"
+import apiSpring from "@/app/api/back/back-api"
 
 const PATH = "/inventories"
 
