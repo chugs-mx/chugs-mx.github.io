@@ -1,6 +1,7 @@
 import NextAuth, {CredentialsSignin} from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { Roles } from "@/types/roles"
+import {login} from "@/app/apiSpring/auth-api";
 
 
 
@@ -14,15 +15,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 password: {}
             },
             authorize: async (credentials, request) => {
-                const {email, password } = credentials
+                const {email, password} = credentials
                 try {
-                    const res = await fetch(`http://localhost:8080/auth/login?email=${email}&password=${password}`, {
-                        method: 'GET'
-                    })
+                    const res = await login(email as string, password as string)
                     if (res.status == 200){
-                        const user = await res.json()
-                        if (user) {
-                            return {...user, id: user.userId, role: user.userType}
+                        const userData = res.data
+                        if (userData) {
+                            return {...userData, id: userData.userId, role: userData.userType}
                         }
                     }
                     return null
