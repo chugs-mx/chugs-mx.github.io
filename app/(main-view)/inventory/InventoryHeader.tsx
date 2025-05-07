@@ -3,36 +3,11 @@ import React from "react";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import {Cross, SearchIcon} from "lucide-react";
+import { columns } from "@/components/inventories/columns";
+import { translateCategory } from "@/components/inventories/translations";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-const inventoryEnums = {
-    CLUTTER: "Embutidos",
-    REFRIGERATED: "Refrigerado",
-    CLEANING: "Limpieza",
-    DISPOSABLE: "Desechable",
-    FROZEN: "Congelado",
-
-    INGREDIENT: "Ingrediente",
-    PRODUCT_VARIANT: "Variante de producto",
-    PRODUCT: "Producto",
-    MEAT: "Carne",
-    VEGETABLES: "Verduras",
-    DRINKS: "Bebidas"
-}
-function translateCategory(category: string) {
-    return inventoryEnums[category as keyof typeof inventoryEnums] || category;
-}
-
-const fields = {
-    "entryDate": "fecha de alta",
-    "expiryDate": "fecha de caducidad",
-    "inventoryCategory": "categoría",
-    "quantity": "cantidad",
-    "name": "nombre",
-    "subcategory": "subcategoría",
-    "unitPrice": "precio",
-}
 
 
 export function InventoryHeader({placeholder = "Buscar", categories, subcategories}: {placeholder?: string, categories: string[], subcategories: string[]}) {
@@ -146,10 +121,9 @@ export function InventoryHeader({placeholder = "Buscar", categories, subcategori
                         onChange={(e) => handleFieldChange(e.target.value)}
                     >
                         <option value="">Ordenar por</option>
-                        {Object.entries(fields).map( ([val, label], i) =>
-                            ( <option key={i} value={val}>{label}</option>)
-                        )
-                        }
+                        {columns.map((col, i) => (
+                            <option key={i} value={col.field.toString()}>{col.label}</option>
+                        ))}
                     </select>
 
                 </div>

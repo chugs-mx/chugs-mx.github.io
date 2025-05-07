@@ -37,7 +37,7 @@ const page = async (props: {
     const fetchedSubcategories = await fetchSubcategories()
 
     return (
-        <div className="flex flex-col gap-4 min-w-full m-4">
+        <div className="flex flex-col gap-4 min-w-full p-4">
             <InventoryHeader placeholder={"Busca por Nombre, Categoría o Subcategoría"} categories={fetchedCategories} subcategories={fetchedSubcategories} />
             <DataTable<Inventory> items={fetchedPage.content} columns={columns} />
             <Pagination pageMeta={fetchedPage.page} />
