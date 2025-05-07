@@ -1,152 +1,44 @@
 'use client'
 
-import React, {useState} from "react";
-import {DataTable} from "@/components/ui/data-table";
-import {columns} from "@/components/inventories/columns";
-import {ProductHeader} from "@/app/(main-view)/inventory/ProductHeader";
+import React, { useEffect, useState } from "react";
+import DataTable from "@/components/data-table";
+import { columns } from "@/components/inventories/columns";
+import {Inventory} from "@/types/Inventory";
+import {InventoryHeader} from "@/app/(main-view)/inventory/InventoryHeader";
 
-interface Inventory {
-  producto: string;
-  cantidad: number;
-  ventasBrutas: number;
-  descuento: number;
-  ingresos: number;
-  ganancias: number;
-}
-
-const mockInventories: Inventory[] = [ 
-    {
-        producto: "Hamburguesa Clásica",
-        cantidad: 30,
-        ventasBrutas: 3000,
-        descuento: 300,
-        ingresos: 2700,
-        ganancias: 1000,
-      },
-      {
-        producto: "Papas Fritas",
-        cantidad: 50,
-        ventasBrutas: 1500,
-        descuento: 100,
-        ingresos: 1400,
-        ganancias: 700,
-      },
-      {
-        producto: "Refresco",
-        cantidad: 80,
-        ventasBrutas: 2000,
-        descuento: 200,
-        ingresos: 1800,
-        ganancias: 600,
-      },
-      {
-          producto: "Refresco",
-          cantidad: 80,
-          ventasBrutas: 2000,
-          descuento: 200,
-          ingresos: 1800,
-          ganancias: 600,
-      },
-      {
-          producto: "Refresco",
-          cantidad: 80,
-          ventasBrutas: 2000,
-          descuento: 200,
-          ingresos: 1800,
-          ganancias: 600,
-        },
-        {
-          producto: "Refresco",
-          cantidad: 80,
-          ventasBrutas: 2000,
-          descuento: 200,
-          ingresos: 1800,
-          ganancias: 600,
-        },
-        {
-          producto: "Refresco",
-          cantidad: 80,
-          ventasBrutas: 2000,
-          descuento: 200,
-          ingresos: 1800,
-          ganancias: 600,
-        },
-        {
-          producto: "Refresco",
-          cantidad: 80,
-          ventasBrutas: 2000,
-          descuento: 200,
-          ingresos: 1800,
-          ganancias: 600,
-        },
-        {
-          producto: "Refresco",
-          cantidad: 80,
-          ventasBrutas: 2000,
-          descuento: 200,
-          ingresos: 1800,
-          ganancias: 600,
-        },
-        {
-          producto: "Refresco",
-          cantidad: 80,
-          ventasBrutas: 2000,
-          descuento: 200,
-          ingresos: 1800,
-          ganancias: 600,
-        },
-        {
-          producto: "Refresco",
-          cantidad: 80,
-          ventasBrutas: 2000,
-          descuento: 200,
-          ingresos: 1800,
-          ganancias: 600,
-        },
-        {
-          producto: "Refresco",
-          cantidad: 80,
-          ventasBrutas: 2000,
-          descuento: 200,
-          ingresos: 1800,
-          ganancias: 600,
-        },
-        {
-          producto: "Refresco",
-          cantidad: 80,
-          ventasBrutas: 2000,
-          descuento: 200,
-          ingresos: 1800,
-          ganancias: 600,
-        },
-        {
-          producto: "Refresco",
-          cantidad: 80,
-          ventasBrutas: 2000,
-          descuento: 200,
-          ingresos: 1800,
-          ganancias: 600,
-        },
-        {
-          producto: "Refresco",
-          cantidad: 80,
-          ventasBrutas: 2000,
-          descuento: 200,
-          ingresos: 1800,
-          ganancias: 600,
-        }
-    ];
 
 const ClientInventoriesPage = () => {
-  const [inventories, setInventories] = useState<Inventory[]>(mockInventories);
+  const [inventories, setInventories] = useState<Inventory[]>([]);
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(3);
 
   const pageCount = Math.ceil(inventories.length / pageSize);
 
+  useEffect(() => {
+    const fetchInventories = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/inventories`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        const data = await res.json();
+        setInventories(data);
+      }catch (error) {
+        console.error("Error al cargar inventarios:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchInventories();
+  }, []);
+
+  if (loading) return <div className="p-4">Cargando inventario...</div>;
+
   return (
     <div className="p-2 px-6 min-w-full">
-      <ProductHeader subcategories={[]} categories={[]}/>
+      <InventoryHeader subcategories={[]} categories={[]}/>
       <DataTable
         columns={columns}
         data={inventories}
