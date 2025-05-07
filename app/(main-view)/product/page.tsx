@@ -4,19 +4,13 @@ import DataTable  from "@/components/data-table";
 import { fetchCategories, fetchProduct } from "./fetchProduct";
 import { ProductHeader } from "./ProductHeader";
 import { Pagination } from "./Pagination";
+import { Product } from "@/types/Product";
+import { columns } from "@/components/product/columns";
 
 export const metadata = {
     title: "Producto",
     description: "Administra tus productos"
 }
-
-const columns = [
-    {label: "Nombre", field: "name"},
-    {label: "Descripción", field: "description"},
-    {label: "Categoría", field: "category"},
-    {label: "Precio unitario", field: "price", isNumeric: true},
-    { label: "Acciones", field: "actions"}
-]
 
 const page = async (props: {
     searchParams: Promise<
@@ -40,9 +34,9 @@ const page = async (props: {
     const fetchedCategories = await fetchCategories()
 
     return (
-        <div className="flex flex-col gap-4 min-w-full">
+        <div className="flex flex-col gap-4 min-w-full p-4">
             <ProductHeader placeholder="Busca por Nombre, Categoría" categories={fetchedCategories} />
-            <DataTable items={fetchedPage.content} columns={columns} />
+            <DataTable<Product> items={fetchedPage.content} columns={columns} />
             <Pagination pageMeta={fetchedPage.page} />
         </div>
     );

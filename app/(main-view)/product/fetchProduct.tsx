@@ -1,12 +1,5 @@
 import {getProducts, getProductsCategories, deleteProductById} from "@/app/apiSpring/product-api";
-
-type Product = {
-    productId: number;
-    name: string;
-    desciption: string;
-    price: number;
-    category: string;
-}
+import {Product} from "@/types/Product";
 
 type ProductResponse = {
     content: Product[];

@@ -3,24 +3,8 @@ import React from "react";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";    
 import { Cross, SearchIcon } from "lucide-react";
-
-const productEnum = {
-    HAMBURGERS: "Hamburguesas",
-    DRINKS: "Bebidas",
-    EXTRA: "Extras",
-    POTATOES: "Papas",
-    DESSERTS:  "Postres",
-}
-function translateCategory(category: string) {
-    return productEnum[category as keyof typeof productEnum] || category;
-}
-
-const fields = {
-    "name": "nombre",
-    "description": "descripción",
-    "price": "precio",
-    "category": "categoría",
-}
+import { columns } from "@/components/inventories/columns";
+import { translateCategory } from "@/components/inventories/translations";
 
 export function ProductHeader({placeholder = "Buscar", categories}: {placeholder?: string, categories: string[]}) {
     const searchParams = useSearchParams();
@@ -106,9 +90,9 @@ export function ProductHeader({placeholder = "Buscar", categories}: {placeholder
                         onChange={(e) => handleFieldChange(e.target.value)}
                         >
                             <option value="">Ordenar por</option>
-                            {Object.entries(fields).map(([val, label], i) => 
-                                ( <option key={i} value={val}>{label}</option>)
-                            )}
+                            {columns.map((col, i) => (
+                                <option key={i} value={col.field.toString()}>{col.label}</option>
+                            ))}
                         </select>
                 </div>
 
