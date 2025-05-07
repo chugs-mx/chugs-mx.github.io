@@ -14,21 +14,9 @@ import {cn} from "@/lib/utils"
 import {Inventory} from "@/components/inventories/columns";
 import {DialogCloseButton} from "@/app/(main-view)/inventory/DialogCloseButton";
 
-const columns = [
-    {label: "Nombre", field: "name"},
-    {label: "Descripción", field: "description"},
-    {label: "Categoría", field: "inventoryCategory"},
-    {label: "Subcategoría", field: "subcategory"},
-    {label: "Cantidad", field: "quantity", isNumeric: true},
-    // {label: "unidad de medida", field: "unitMeasure"},
-    {label: "Precio unitario", field: "unitPrice", isNumeric: true},
-    {label: "Alta", field: "entryDate"},
-    {label: "Caducidad", field: "expiryDate"},
-    { label: "Acciones", field: "actions"}
-]
-
 interface DataTableProps {
-    items?: Object[]
+    items?: Object[],
+    columns?: Object[]
 }
 
 const inventoryEnums = {
@@ -62,7 +50,7 @@ function translateMeasureUnit(unitMeasure: string) {
     }
 }
 
-const DataTable = ({items}: DataTableProps) => {
+const DataTable = ({items,columns}: DataTableProps) => {
     return (
         <>
             <div className="rounded-md bg-[#fff3e6] shadow-sm overflow-hidden min-h-40">
@@ -71,7 +59,7 @@ const DataTable = ({items}: DataTableProps) => {
                         {/* Renderizar los encabezados de la tabla */}
                         <TableRow>
                             {/* Renderizar los encabezados de la tabla */}
-                            {columns.map((column, i) => (
+                            {columns?.map((column, i) => (
                                 <TableHead
                                     key={i}
                                     className="text-background font-bold text-xl text-center px-4 py-3">{column.label}</TableHead>
@@ -85,7 +73,7 @@ const DataTable = ({items}: DataTableProps) => {
                                 key={i}
                                 className={2 % 2 === 0 ? "bg-[#ffe0cc]" : "bg-[#fff3e6]"}
                             >
-                                {columns.map((column, j) => {
+                                {columns?.map((column, j) => {
                                     if (column.field == "actions") {
                                         return (
                                             <TableCell key={j}>
@@ -108,11 +96,11 @@ const DataTable = ({items}: DataTableProps) => {
                                             </TableCell>
                                         )
                                     }
-                                    if (column.field === "unitPrice") {
+                                    if (column.field === "price") {
                                         return (
                                             <TableCell key={j} className="text-right px-4 py-1 text-base ">
                                                 <span className={cn("text-primary-foreground", column.isNumeric ? "font-bold" : "")}>
-                                                    ${row.unitPrice}
+                                                    ${row.price}
                                                 </span>
                                             </TableCell>
                                         )

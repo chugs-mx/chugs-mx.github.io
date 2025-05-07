@@ -1,39 +1,28 @@
 "use client"
 import React from "react";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
-import { useDebouncedCallback } from "use-debounce";
-import {SearchIcon} from "lucide-react";
+import { useDebouncedCallback } from "use-debounce";    
+import { Cross, SearchIcon } from "lucide-react";
 
-const inventoryEnums = {
-    CLUTTER: "Embutidos",
-    REFRIGERATED: "Refrigerado",
-    CLEANING: "Limpieza",
-    DISPOSABLE: "Desechable",
-    FROZEN: "Congelado",
-
-    INGREDIENT: "Ingrediente",
-    PRODUCT_VARIANT: "Variante de producto",
-    PRODUCT: "Producto",
-    MEAT: "Carne",
-    VEGETABLES: "Verduras",
-    DRINKS: "Bebidas"
+const productEnum = {
+    HAMBURGERS: "Hamburguesas",
+    DRINKS: "Bebidas",
+    EXTRA: "Extras",
+    POTATOES: "Papas",
+    DESSERTS:  "Postres",
 }
 function translateCategory(category: string) {
-    return inventoryEnums[category as keyof typeof inventoryEnums] || category;
+    return productEnum[category as keyof typeof productEnum] || category;
 }
 
 const fields = {
-    "entryDate": "fecha de registro",
-    "expiryDate": "fecha de caducidad",
-    "inventoryCategory": "categoría",
-    "quantity": "cantidad",
     "name": "nombre",
-    "subcategory": "subcategoría",
-    "unitPrice": "precio",
+    "description": "descripción",
+    "price": "precio",
+    "category": "categoría",
 }
 
-
-export function ProductHeader({placeholder = "Buscar", categories, subcategories}: {placeholder?: string, categories: string[], subcategories: string[]}) {
+export function ProductHeader({placeholder = "Buscar", categories}: {placeholder?: string, categories: string[]}) {
     const searchParams = useSearchParams();
     const { replace } = useRouter();
     const pathname = usePathname();
@@ -51,16 +40,6 @@ export function ProductHeader({placeholder = "Buscar", categories, subcategories
 
     const handleDebouncedSearch = useDebouncedCallback(handleSearch, 300);
 
-    function handleSubcategoryChange(value: string) {
-        const params = new URLSearchParams(searchParams);
-        params.set("page", '1');
-        if (value !== ""){
-            params.set("subcategory", value);
-        } else {
-            params.delete("subcategory");
-        }
-        replace(`${pathname}?${params.toString()}`)
-    }
     function handleCategoryChange(value: string) {
         const params = new URLSearchParams(searchParams);
         params.set("page", '1');
@@ -71,7 +50,6 @@ export function ProductHeader({placeholder = "Buscar", categories, subcategories
         }
         replace(`${pathname}?${params.toString()}`)
     }
-
 
     function handleFieldChange(value: string) {
         const params = new URLSearchParams(searchParams);
@@ -87,7 +65,7 @@ export function ProductHeader({placeholder = "Buscar", categories, subcategories
     return (
         <>
             <div className="items-start p-2">
-                <h1 className="text-6xl font-bold text-primary-foreground">PRODUCTOS</h1>
+                <h1 className="text-6xl font-bold text-primary-foreground tracking-widest">PRODUCTOS</h1>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
                 <div className="flex items-center border border-primary-foreground px-3 py-2 rounded">
@@ -98,54 +76,42 @@ export function ProductHeader({placeholder = "Buscar", categories, subcategories
                             handleDebouncedSearch(e.target.value);
                         }}
                         placeholder={placeholder}
-                        className="outline-none bg-transparent text-primary-foreground w-full "
+                        className="outline-none bg-transparent text-primary-foreground w-full"
                         defaultValue={searchParams.get("search") || ""}
                     />
                 </div>
 
                 <div className="flex gap-2 items-center relative">
-                    {/*desde la api de forma cacheada*/}
                     <select
                         className="text-xl text-primary-foreground px-2 py-2"
                         onChange={(e) => handleCategoryChange(e.target.value)}
                     >
                         <option value="">Categorías</option>
-                        {categories.map( (category, i) =>
+                        {categories.map((category, i) => 
                             ( <option key={i} value={category}>{translateCategory(category)}</option>)
                         )
                         }
                     </select>
-                    <select
-                        className="text-xl text-primary-foreground px-2 py-2"
-                        onChange={(e) =>  handleSubcategoryChange(e.target.value)}
-                    >
-                        <option value="">Subcategoría</option>
-                        {subcategories.map( (subcategory, i) =>
-                                ( <option key={i} value={subcategory}>{translateCategory(subcategory)}</option>)
-                            )
-                        }
-                    </select>
-
-
                 </div>
-
             </div>
-
             <div className="flex flex-wrap justify-between items-center w-full gap-2">
-                <select
+                <div className="flex gap-8">
+                        <button className="items-center text-lg text-primary-foreground px-2 py-2 rounded-md flex items-center">
+                            <Cross className="fill-primary-foreground w-5 h-5 mr-2 stroke-primary-foreground"/>
+                            Agregar Nuevo
+                        </button>
+
+                        <select
                         className="text-xl text-primary-foreground"
                         onChange={(e) => handleFieldChange(e.target.value)}
-                >
-                        <option value="">Ordenar por</option>
-                        {Object.entries(fields).map( ([val, label], i) =>
-                            ( <option key={i} value={val}>{label}</option>)
-                        )
-                        }
-                </select>
-
-                <div className="text-xl font-bold text-primary-foreground mt-2 sm:mt-0">
-                    28 enero - 28 febrero
+                        >
+                            <option value="">Ordenar por</option>
+                            {Object.entries(fields).map(([val, label], i) => 
+                                ( <option key={i} value={val}>{label}</option>)
+                            )}
+                        </select>
                 </div>
+
             </div>
         </>
     );
