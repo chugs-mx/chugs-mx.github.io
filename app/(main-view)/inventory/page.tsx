@@ -2,12 +2,9 @@ import {auth} from "@/auth";
 import {redirect} from "next/navigation";
 import {fetchCategories, fetchInventory, fetchSubcategories} from "@/app/(main-view)/inventory/fetchInventory";
 import {InventoryHeader} from "@/app/(main-view)/inventory/InventoryHeader";
-import {sort} from "next/dist/build/webpack/loaders/css-loader/src/utils";
 import DataTable, {Column} from "@/components/data-table";
-import ClientInventoriesPage from "@/app/(main-view)/inventory/ClientInventoriesPage";
 import {Pagination} from "@/app/(main-view)/inventory/Pagination";
 import { Inventory } from "@/types/Inventory";
-import {translateCategory, translateMeasureUnit} from "@/components/inventories/translations";
 import { columns } from "@/components/inventories/columns";
 
 export const metadata = {

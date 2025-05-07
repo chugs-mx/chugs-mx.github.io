@@ -3,6 +3,8 @@
 import { translateCategory, translateMeasureUnit } from "@/components/inventories/translations";
 import { Column } from "@/components/data-table";
 import { Inventory } from "@/types/Inventory";
+import { Pencil, StickyNote } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 export const columns: Column<Inventory>[] = [
         {
@@ -53,5 +55,19 @@ export const columns: Column<Inventory>[] = [
           field: "unitPrice",
           isNumeric: true,
           render: (value) => `$${value}`
+        },
+        {
+            label: "Acciones",
+            field: "actions",
+            render: (_, row) => (
+                <div className="flex justify-evenly items-center">
+                    <button className="cursor-pointer">
+                        <Pencil className="stroke-primary-foreground"/>
+                    </button>
+                    <button className="">
+                        <Trash2 className="stroke-primary-foreground"/>
+                        </button>
+                </div>
+            )
         }
       ];
