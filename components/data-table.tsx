@@ -47,7 +47,7 @@ const DataTable = <T,>({items,columns}: DataTableProps<T>): React.ReactElement =
                         {items?.map((row, i) => (
                             <TableRow
                                 key={i}
-                                className={2 % 2 === 0 ? "bg-[#ffe0cc]" : "bg-[#fff3e6]"}
+                                className={i % 2 === 0 ? "bg-[#ffe0cc]" : "bg-[#fff3e6]"}
                             >
                                 {columns?.map((column, j) => {
                                     const value = (row as any)[column.field];
