@@ -4,13 +4,14 @@ import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import Image from "next/image";
 
 interface PaginationProps {
-    pageMeta: { number: number; size: number; totalElements: number; totalPages: number }
+    pageMeta?: { number: number; size: number; totalElements: number; totalPages: number }
 }
 
 export function Pagination({pageMeta}: PaginationProps) {
     const searchParams = useSearchParams();
     const { replace } = useRouter();
     const pathname = usePathname();
+    if (!pageMeta) return null;
     const { number, totalPages, size} = pageMeta;
     function handlePageSizeChange(value: string) {
         const params = new URLSearchParams(searchParams)
