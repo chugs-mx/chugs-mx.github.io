@@ -1,15 +1,18 @@
 "use client"
-import React from "react";
+import React, { useState } from "react";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";    
 import { Cross, SearchIcon } from "lucide-react";
-import { columns } from "@/components/inventories/columns";
-import { translateCategory } from "@/components/inventories/translations";
+import { columns } from "@/components/product/columns";
+import { translateCategory } from "@/components/product/translations";
+import { AddProductModal } from "./AddProductModal";
 
 export function ProductHeader({placeholder = "Buscar", categories}: {placeholder?: string, categories: string[]}) {
     const searchParams = useSearchParams();
     const { replace } = useRouter();
     const pathname = usePathname();
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     function handleSearch(term: string) {
         const params = new URLSearchParams(searchParams);
@@ -80,7 +83,9 @@ export function ProductHeader({placeholder = "Buscar", categories}: {placeholder
             </div>
             <div className="flex flex-wrap justify-between items-center w-full gap-2">
                 <div className="flex gap-8">
-                        <button className="items-center text-lg text-primary-foreground px-2 py-2 rounded-md flex items-center">
+                        <button
+                            onClick={() => setIsModalOpen(true)}
+                            className="items-center text-lg text-primary-foreground px-2 py-2 rounded-md flex items-center">
                             <Cross className="fill-primary-foreground w-5 h-5 mr-2 stroke-primary-foreground"/>
                             Agregar Nuevo
                         </button>
@@ -90,13 +95,20 @@ export function ProductHeader({placeholder = "Buscar", categories}: {placeholder
                         onChange={(e) => handleFieldChange(e.target.value)}
                         >
                             <option value="">Ordenar por</option>
-                            {columns.map((col, i) => (
+                            {columns
+                            .filter((col) => col.label !== "Acciones")
+                            .map((col, i) => (
                                 <option key={i} value={col.field.toString()}>{col.label}</option>
                             ))}
                         </select>
                 </div>
-
             </div>
+            <AddProductModal
+                open={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                categories={categories}
+                onCategoryChange={handleCategoryChange}
+            />
         </>
     );
 }
