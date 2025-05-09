@@ -85,7 +85,7 @@ export function ProductHeader({placeholder = "Buscar", categories}: {placeholder
                 <div className="flex gap-8">
                         <button
                             onClick={() => setIsModalOpen(true)}
-                            className="items-center text-lg text-primary-foreground px-2 py-2 rounded-md flex items-center">
+                            className="items-center text-lg text-primary-foreground px-2 py-2 rounded-md flex">
                             <Cross className="fill-primary-foreground w-5 h-5 mr-2 stroke-primary-foreground"/>
                             Agregar Nuevo
                         </button>

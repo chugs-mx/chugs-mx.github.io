@@ -96,7 +96,7 @@ export default function IngredientSelector() {
                 filteredOptions.map((opt) => (
                   <CommandItem
                     key={opt.value}
-                    onMouseDown={(e) => e.preventDefault()}
+                    //onMouseDown={(e) => e.preventDefault()}
                     onSelect={() => handleSelect(opt.value)}
                   >
                     {opt.label}
