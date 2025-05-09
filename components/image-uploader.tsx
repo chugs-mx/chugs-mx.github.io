@@ -16,15 +16,16 @@ export default function ImageUploader() {
   };
 
   return (
+    <label htmlFor="imageUpload" className="cursor-pointer">
     <div className="flex flex-col items-center justify-center gap-2 bg-background border rounded-md py-6">
-      <label htmlFor="imageUpload" className="cursor-pointer">
+      
         <Image
           src="/icons/upload-image-icon.svg"
           alt="Upload"
           width={100}
           height={100}
         />
-      </label>
+     
 
       <input
         id="imageUpload"
@@ -43,5 +44,6 @@ export default function ImageUploader() {
         </div>
       )}
     </div>
+    </label>
   );
 }
