@@ -18,6 +18,7 @@ import { translateCategory } from "@/components/product/translations";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import IngredientSelector from "@/components/ingredient-selector";
+import ImageUploader from "@/components/image-uploader";
 
 const productSchema = z.object({
   name: z.string().min(1, "El nombre es obligatorio"),
@@ -64,7 +65,6 @@ export function AddProductModal({
             Añadir nuevo producto
           </DialogTitle>
         </DialogHeader>
-
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 py-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="w-full">
@@ -116,7 +116,7 @@ export function AddProductModal({
                 className="flex flex-wrap gap-2"
               >
                 <ToggleGroupItem
-                  value="Subcategoria"
+                  value="carne"
                   aria-label="Subcategoria"
                   className="px-4 py-1 text-sm sm:text-base truncate border border-background rounded-md data-[state=on]:bg-background data-[state=on]:text-primary-foreground text-background font-bold"
                 >
@@ -124,7 +124,7 @@ export function AddProductModal({
                 </ToggleGroupItem>
 
                 <ToggleGroupItem
-                  value="Subcategoria"
+                  value="pollo"
                   aria-label="Subcategoria"
                   className="px-4 py-1 text-sm sm:text-base truncate border border-background rounded-md data-[state=on]:bg-background data-[state=on]:text-primary-foreground text-background font-bold"
                 >
@@ -132,7 +132,7 @@ export function AddProductModal({
                 </ToggleGroupItem>
 
                 <ToggleGroupItem
-                  value="Subcategoria"
+                  value="vegana"
                   aria-label="Subcategoria"
                   className="px-4 py-1 text-sm sm:text-base truncate border border-background rounded-md data-[state=on]:bg-background data-[state=on]:text-primary-foreground text-background font-bold"
                 >
@@ -142,8 +142,8 @@ export function AddProductModal({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
+          <div className="flex w-full gap-4">
+            <div className="flex-[1]">
               <Label className="text-background text-xl font-bold pb-2">
                 Tamaño
               </Label>
@@ -164,17 +164,21 @@ export function AddProductModal({
                 </RadioGroup>
               </div>
             </div>
-            <div>
-              <div>
-                <h2 className="text-background text-xl font-bold pb-1">
-                  Ingrediente por defecto
-                </h2>
-              </div>
+            <div className="flex-[2]">
+              <h2 className="text-background text-lg sm:text-xl font-bold pb-1">
+                Ingrediente por defecto
+              </h2>
+              <IngredientSelector />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div>{/*Cargar Imagen*/}</div>
+            <div>
+              <Label className="text-background text-lg sm:text-xl font-bold pb-1 ">
+                Cargar Imagen
+              </Label>
+              <ImageUploader />
+            </div>
             <div className="grid gap-2">
               <div>
                 <Label className="text-background text-xl font-bold pb-1">
