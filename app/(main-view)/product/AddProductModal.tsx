@@ -19,6 +19,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import IngredientSelector from "@/components/ingredient-selector";
 import ImageUploader from "@/components/image-uploader";
+import MultipleSelectorDemo from "@/components/multi-autocomplete";
 
 const productSchema = z.object({
   name: z.string().min(1, "El nombre es obligatorio"),
@@ -168,7 +169,7 @@ export function AddProductModal({
               <h2 className="text-background text-lg sm:text-xl font-bold pb-1">
                 Ingrediente por defecto
               </h2>
-              <IngredientSelector />
+              <MultipleSelectorDemo></MultipleSelectorDemo>
             </div>
           </div>
 
