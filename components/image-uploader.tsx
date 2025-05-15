@@ -17,33 +17,35 @@ export default function ImageUploader() {
 
   return (
     <label htmlFor="imageUpload" className="cursor-pointer">
-    <div className="flex flex-col items-center justify-center gap-2 bg-background border rounded-md py-6">
-      
+      <div className="relative flex flex-col items-center justify-center gap-2 bg-background border rounded-md py-6">
         <Image
           src="/icons/upload-image-icon.svg"
           alt="Upload"
           width={100}
           height={100}
         />
-     
 
-      <input
-        id="imageUpload"
-        type="file"
-        accept="image/*"
-        onChange={handleImageChange}
-        className="hidden" 
-      />
-      {preview && (
-        <div className="mt-2">
+        {preview && (
           <img
             src={preview}
             alt="Vista previa"
-            className="w-32 h-32 object-cover rounded border"
+            className="absolute top-1/2 left-1/2 w-30 h-30 object-cover rounded border z-0 transform -translate-x-1/2 -translate-y-1/2 pb-1"
           />
-        </div>
-      )}
-    </div>
+        )}
+
+        <input
+          id="imageUpload"
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="hidden"
+        />
+        {preview && (
+          <span className="text-primary-foreground text-sm font-medium mt-2">
+            Imagen cargada correctamente
+          </span>
+        )}
+      </div>
     </label>
   );
 }

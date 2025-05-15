@@ -54,8 +54,55 @@ type GetProductsParams = {
         })
     }
 
+    const postFormProduct = (id: number, formData: FormData) => {
+        return apiSpring({
+            url: `${PATH}/${id}`,
+            method: "POST",
+            data: formData,
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+    }
+
+    export type NewProductData = {
+        name: string;
+        description?: string;
+        price: number;
+        category: string;
+        types: string[];
+        size: string;
+        defaultIngredients?: string[];
+    };
+
+    const postJsonProduct = async (data: NewProductData): Promise<any> => {
+        console.log("Enviando producto");
+        return apiSpring({
+            url: `${PATH}`,
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data
+        })
+    }
+
+    const putJsonProduct = async (id: number, data: NewProductData): Promise<any> => {
+        apiSpring({
+            url: `${PATH}/${id}`,
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data
+        })
+    }
+
+
     export{
         getProducts,
         getProductsCategories,
-        deleteProductById
+        deleteProductById,
+        postJsonProduct,
+        putJsonProduct
     }
