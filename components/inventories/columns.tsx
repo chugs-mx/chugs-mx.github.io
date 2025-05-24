@@ -1,64 +1,74 @@
-import { ColumnDef } from "@tanstack/react-table"
-import Image from "next/image"
+ 'use client'
 
-export type Inventory = {
-  producto: string
-  cantidad: number
-  ventasBrutas: number
-  descuento: number
-  ingresos: number
-  ganancias: number
-  acciones?: string
-}
+import { translateCategory, translateMeasureUnit } from "@/components/inventories/translations";
+import { Column } from "@/components/data-table";
+import { Inventory } from "@/types/Inventory";
+import { Pencil, StickyNote } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
-export const columns: ColumnDef<Inventory>[] = [
-  {
-    accessorKey: "producto",
-    header: "Productos",
-  },
-  {
-    accessorKey: "cantidad",
-    header: "Cantidad",
-  },
-  {
-    accessorKey: "ventasBrutas",
-    header: "Ventas brutas",
-  },
-  {
-    accessorKey: "descuento",
-    header: "Descuento",
-  },
-  {
-    accessorKey: "ingresos",
-    header: "Ingresos",
-  },
-  {
-    accessorKey: "ganancias",
-    header: "Ganancias",
-  },
-  {
-    accessorKey: "acciones",
-    header: "Acciones",
-    cell: ({ row }) => (
-      <div className="flex items-center justify-between p-2">
-        <button>
-            <Image
-                src={"/icons/delete_icon.svg"}
-                alt="Delete icon"
-                width={20}
-                height={20}
-            />
-        </button>
-        <button className="">
-            <Image
-                src="/icons/edit_icon.svg"
-                alt="edit"
-                width={20}
-                height={20}
-                className="inline-block mr-2"
-            />
-        </button>
-      </div>
-    ),
-  },
-]
+export const columns: Column<Inventory>[] = [
+        {
+          label: "Nombre",
+          field: "name"
+        },
+        {
+            label: "Descripción",
+            field: "description"
+        },
+        {
+          label: "Categoría",
+          field: "inventoryCategory",
+          render: (value) => translateCategory(value as string)
+        },
+        {
+          label: "Subcategoría",
+          field: "subcategory",
+          render: (value) => translateCategory(value as string)
+        },
+        {
+          label: "Registro",
+          field: "entryDate",
+          render: (value) =>
+            new Date(value as string).toLocaleDateString("es-MX", {
+              year: "numeric",
+              month: "short",
+              day: "numeric"
+            })
+        },
+        {
+          label: "Caducidad",
+          field: "expiryDate",
+          render: (value) =>
+            new Date(value as string).toLocaleDateString("es-MX", {
+              year: "numeric",
+              month: "short",
+              day: "numeric"
+            })
+        },
+        {
+          label: "Cantidad",
+          field: "quantity",
+          render: (_, row) => `${row.quantity} ${translateMeasureUnit(row.unitMeasure)}`
+        },
+        {
+          label: "Precio unitario",
+          field: "unitPrice",
+          isNumeric: true,
+          render: (value) => `$${value}`
+        },
+        {
+            label: "Acciones",
+            field: "actions",
+            render: (_, row) => (
+                <div className="flex justify-evenly items-center">
+                    <button className="cursor-pointer">
+                        <Pencil className="stroke-primary-foreground"/>
+                    </button>
+                    <button className="">
+                        <Trash2 className="stroke-primary-foreground"/>
+                        </button>
+                </div>
+            )
+        }
+      ];
+

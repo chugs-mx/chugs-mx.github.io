@@ -2,16 +2,15 @@ import {auth} from "@/auth";
 import {redirect} from "next/navigation";
 import {fetchCategories, fetchInventory, fetchSubcategories} from "@/app/(main-view)/inventory/fetchInventory";
 import {InventoryHeader} from "@/app/(main-view)/inventory/InventoryHeader";
-import {sort} from "next/dist/build/webpack/loaders/css-loader/src/utils";
-import DataTable from "@/components/data-table";
-import ClientInventoriesPage from "@/app/(main-view)/inventory/ClientInventoriesPage";
+import DataTable, {Column} from "@/components/data-table";
 import {Pagination} from "@/app/(main-view)/inventory/Pagination";
+import { Inventory } from "@/types/Inventory";
+import { columns } from "@/components/inventories/columns";
 
 export const metadata = {
     title: "Inventario",
     description: "Administra tu inventario",
 }
-
 
 const page = async (props: {
     searchParams: Promise<
@@ -37,20 +36,12 @@ const page = async (props: {
     const fetchedSubcategories = await fetchSubcategories()
 
     return (
-        <div className="flex flex-col gap-4 min-w-full">
+        <div className="flex flex-col gap-4 min-w-full p-4">
             <InventoryHeader placeholder={"Busca por Nombre, Categoría o Subcategoría"} categories={fetchedCategories} subcategories={fetchedSubcategories} />
-            <DataTable items={fetchedPage.content} />
+            <DataTable<Inventory> items={fetchedPage.content} columns={columns} />
             <Pagination pageMeta={fetchedPage.page} />
-
-            {
-                fetchedPage?.page?.totalPages > 1 && (
-                    <div className="flex justify-center">
-                        Pagina {fetchedPage.page.number + 1} de {fetchedPage.page.totalPages} | Tamaño de pagina {fetchedPage.page.size}
-                    </div>
-                )
-            }
         </div>
     );
 };
 
-export default page
+export default page;

@@ -1,5 +1,6 @@
 "use client"
-import api from "@/app/api/back/back-api"
+import api from "@/app/apiSpring/back-api"
+
 import {useEffect, useState} from "react"
 
 export default function () {

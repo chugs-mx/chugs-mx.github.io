@@ -1,14 +1,6 @@
-import {getInventories, getInventoriesCategories, getInventoriesSubcategories, deleteInventoryById} from "@/app/api/back/inventory-api";
+import {getInventories, getInventoriesCategories, getInventoriesSubcategories, deleteInventoryById} from "@/app/apiSpring/inventory-api";
+import { Inventory } from "@/types/Inventory";
 
-type Inventory = {
-    inventoryId: number;
-    name: string;
-    description: string;
-    price: number;
-    category: string;
-    subCategory: string;
-    quantity: number;
-}
 
 type InventoryResponse = {
     content: Inventory[];

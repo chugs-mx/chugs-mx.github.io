@@ -1,17 +1,17 @@
-"use client";
+"use client"
 import React from "react";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import Image from "next/image";
 
-
 interface PaginationProps {
-    pageMeta: { number: number; size: number; totalElements: number; totalPages: number }
+    pageMeta?: { number: number; size: number; totalElements: number; totalPages: number }
 }
 
 export function Pagination({pageMeta}: PaginationProps) {
     const searchParams = useSearchParams();
     const { replace } = useRouter();
     const pathname = usePathname();
+    if (!pageMeta) return null;
     const { number, totalPages, size} = pageMeta;
     function handlePageSizeChange(value: string) {
         const params = new URLSearchParams(searchParams)
@@ -26,19 +26,19 @@ export function Pagination({pageMeta}: PaginationProps) {
         replace(`${pathname}?${params.toString()}`)
     }
 
-    function handleLastPage() {
+    function handleLastPage() { 
         const params = new URLSearchParams(searchParams)
         params.set("page", totalPages.toString())
         replace(`${pathname}?${params.toString()}`)
     }
 
-    function handleNextPage() {
+    function handleNextPage(){
         const params = new URLSearchParams(searchParams)
         params.set("page", (number + 2).toString())
         replace(`${pathname}?${params.toString()}`)
     }
 
-    function handlePreviousPage() {
+    function handlePreviousPage(){
         const params = new URLSearchParams(searchParams)
         params.set("page", (number).toString())
         replace(`${pathname}?${params.toString()}`)
@@ -59,29 +59,29 @@ export function Pagination({pageMeta}: PaginationProps) {
             </div>
             <button onClick={() => (handleFirstPage())}
                     className="px-3 py-2 text-primary-foreground disabled:opacity-50 cursor-pointer">
-                     <Image src="/icons/start_table.svg" alt="First" width={20} height={20} />
+                        <Image src="/icons/start_table.svg" alt="First" width={20} height={20} />
             </button>
 
             <button onClick={() => handlePreviousPage()}
                     disabled={number <= 0 || totalPages <= 0}
                     className="px-3 py-2 text-primary-foreground disabled:opacity-50 cursor-pointer">
-                    <Image src="/icons/previous_table.svg" alt="First" width={20} height={20} />
+                        <Image src="/icons/previous_table.svg" alt="First" width={20} height={20} />
             </button>
 
             <span className="text-primary-foreground text-sm">
-          Página {number+1} de {totalPages}
-        </span>
+                Página {number+1} de {totalPages}
+            </span>
 
             <button onClick={() => handleNextPage()}
                     disabled={ number >= totalPages - 1 || totalPages <= 0}
                     className="px-3 py-2 text-primary-foreground disabled:opacity-50 cursor-pointer">
-                <Image src="/icons/next_table.svg" alt="First" width={20} height={20} />
-
+                        <Image src="/icons/next_table.svg" alt="First" width={20} height={20} />
             </button>
+
 
             <button onClick={() => handleLastPage()}
                     className="px-3 py-2 text-primary-foreground disabled:opacity-50 cursor-pointer">
-                <Image src="/icons/end_table.svg" alt="First" width={20} height={20} />
+                        <Image src="/icons/end_table.svg" alt="First" width={20} height={20} />
             </button>
         </div>
     )

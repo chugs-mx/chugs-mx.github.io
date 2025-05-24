@@ -1,6 +1,6 @@
 "use server"
 import {revalidatePath} from "next/cache";
-import {deleteInventoryById} from "@/app/api/back/inventory-api";
+import {deleteInventoryById} from "@/app/apiSpring/inventory-api";
 
 export async function deleteInventory(id: number) {
     try {
