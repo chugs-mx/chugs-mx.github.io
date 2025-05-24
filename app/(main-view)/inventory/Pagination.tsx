@@ -3,6 +3,7 @@ import React from "react";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import Image from "next/image";
 
+
 interface PaginationProps {
     pageMeta: { number: number; size: number; totalElements: number; totalPages: number }
 }
@@ -75,6 +76,7 @@ export function Pagination({pageMeta}: PaginationProps) {
                     disabled={ number >= totalPages - 1 || totalPages <= 0}
                     className="px-3 py-2 text-primary-foreground disabled:opacity-50 cursor-pointer">
                 <Image src="/icons/next_table.svg" alt="First" width={20} height={20} />
+
             </button>
 
             <button onClick={() => handleLastPage()}

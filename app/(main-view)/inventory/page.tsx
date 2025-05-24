@@ -29,7 +29,6 @@ const page = async (props: {
     if (!session || session?.user?.role !== "ADMIN") {
         redirect("/login");
     }
-
     const searchParams = await props.searchParams;
 
     const fetchedPage = await fetchInventory(searchParams.search, searchParams.page, searchParams.size, searchParams.sort, searchParams.asc, searchParams.category, searchParams.subcategory);

@@ -71,3 +71,4 @@ export const columns: Column<Inventory>[] = [
             )
         }
       ];
+

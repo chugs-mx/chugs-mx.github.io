@@ -29,6 +29,7 @@ interface DataTableProps<T> {
 const DataTable = <T,>({items,columns}: DataTableProps<T>): React.ReactElement => {
     return (
         
+
             <div className="rounded-md bg-[#fff3e6] shadow-sm overflow-hidden min-h-40">
                 <Table className="overflow-x-auto">
                     <TableHeader className="bg-primary-foreground text-background ">
@@ -62,6 +63,7 @@ const DataTable = <T,>({items,columns}: DataTableProps<T>): React.ReactElement =
                                             </TableCell>
                                         );
                                     })}
+
                             </TableRow>
                         ))}
                     </TableBody>
