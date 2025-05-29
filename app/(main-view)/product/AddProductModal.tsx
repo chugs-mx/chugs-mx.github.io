@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -14,7 +14,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { translateCategory } from "@/components/product/translations";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import IngredientSelector from "@/components/ingredient-selector";
@@ -22,16 +21,21 @@ import ImageUploader from "@/components/image-uploader";
 import MultipleSelectorDemo from "@/components/multi-autocomplete";
 import { postJsonProduct } from "@/app/apiSpring/product-api";
 import { productSchema, ProductFormValues } from "@/schemas/product-schema";
+import { Category, Subcategory } from "@/types/Category";
+import { capitalize } from "@/types/String";
+import Toast from "@/components/Toast";
 
 export function AddProductModal({
   open,
   onClose,
   categories,
+  subcategories,
   productId,
 }: {
   open: boolean;
   onClose: () => void;
-  categories: string[];
+  categories: Category[];
+  subcategories: Subcategory[];
   productId?: number;
 }) {
   const {
@@ -39,35 +43,75 @@ export function AddProductModal({
     handleSubmit,
     control,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
   });
 
-  console.log("Errores del formulario:", errors);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedSubcategory, setSelectedSubcategory] =
+    useState<Subcategory | null>(null);
+
+  const selectedSubcategories =
+    categories.find((cat) => cat.name === selectedCategory)?.subcategories ||
+    [];
+
+  useEffect(() => {
+    setValue("defaultIngredients", []);
+    setValue("size", undefined);
+  }, [selectedSubcategory]);
+
+  const [toastMessage, setToastMessage] = useState("");
+  const [isErrorToast, setIsErrorToast] = useState(false);
 
   const onSubmit: SubmitHandler<ProductFormValues> = async (formData) => {
     console.log("Formulario enviado", formData);
     try {
       if (formData.price === undefined) {
-        alert("El precio es obligatorio");
+        setIsErrorToast(true);
+        setToastMessage("El precio es obligatorio");
         return;
       }
 
+      const defaultIngredients = formData.defaultIngredients?.map((id) =>
+        Number(id)
+      );
+
       const productData = {
-        ...formData,
-        types: formData.types ?? [],
+        name: formData.name,
+        description: formData.description || "",
+        price: formData.price,
+        categoryId: Number(formData.category),
+        subcategoryId: Number(formData.subcategory),
+        defaultIngredients: selectedSubcategory?.defaultIngredients.filter(
+          (ingredient) =>
+            formData.defaultIngredients?.includes(ingredient.id.toString())
+        ),
+        sizeId: formData.size?.id,
       };
 
       await postJsonProduct(productData);
-      alert("Producto creado con éxito");
+      setIsErrorToast(false);
+      setToastMessage("Producto creado con éxito");
       reset();
       onClose();
     } catch (error) {
       console.error("Error al crear el producto:", error);
-      alert("Error al crear el producto");
+      setIsErrorToast(true);
+      setToastMessage("Error al crear el producto");
     }
   };
+
+  {
+    toastMessage && (
+      <Toast
+        message={toastMessage}
+        isError={isErrorToast}
+        onClose={() => setToastMessage("")}
+      />
+    );
+  }
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -103,15 +147,18 @@ export function AddProductModal({
               </Label>
               <select
                 className="text-sm px-2 py-2 bg-background w-full border border-primary-foreground rounded-md pb-1.5"
-                {...register("category")}
+                {...register("category", { valueAsNumber: true })}
                 onChange={(e) => {
-                  //onCategoryChange(e.target.value);
+                  const selected = Number(e.target.value);
+                  setSelectedCategory(
+                    categories.find((cat) => cat.id === selected)?.name || null
+                  );
                 }}
               >
                 <option value="">Categorías</option>
                 {categories.map((category, i) => (
-                  <option key={i} value={category}>
-                    {translateCategory(category)}
+                  <option key={category.id} value={category.id}>
+                    {capitalize(category.name)}
                   </option>
                 ))}
               </select>
@@ -124,31 +171,44 @@ export function AddProductModal({
           <div className="grid grid-cols-1 gap-4">
             <div>
               <Label className="text-background text-xl font-bold pb-1">
-                Tipo de producto
+                Subcategoría
               </Label>
             </div>
 
             <div className="flex justify-center">
               <Controller
-                name="types"
+                name="subcategory"
                 control={control}
                 render={({ field }) => (
                   <ToggleGroup
                     variant="outline"
-                    type="multiple"
+                    type="single"
                     className="flex flex-wrap gap-2"
-                    value={field.value || []}
-                    onValueChange={field.onChange}
+                    value={field.value?.toString()}
+                    onValueChange={(value) => {
+                      const numValue = Number(value);
+                      field.onChange(numValue);
+                      const selected = subcategories.find(
+                        (sub) => sub.id === numValue
+                      );
+                      if (selected) {
+                        setSelectedSubcategory(selected);
+                      } else {
+                        setSelectedSubcategory(null);
+                      }
+                      setValue("size", undefined);
+                    }}
                   >
-                    <ToggleGroupItem value="carne" aria-label="Subcategoria">
-                      Hamburguesa de Carne
-                    </ToggleGroupItem>
-                    <ToggleGroupItem value="pollo" aria-label="Subcategoria">
-                      Hamburguesa de Pollo
-                    </ToggleGroupItem>
-                    <ToggleGroupItem value="vegana" aria-label="Subcategoria">
-                      Hamburguesa Vegana
-                    </ToggleGroupItem>
+                    {selectedSubcategories.map((sub) => (
+                      <ToggleGroupItem
+                        className="text-background text-sm sm:text-lg font-boltext-sm px-3 py-1 border rounded-lg w-full"
+                        key={sub.id}
+                        value={sub.id.toString()}
+                        aria-label="Subcategoría"
+                      >
+                        {sub.name}
+                      </ToggleGroupItem>
+                    ))}
                   </ToggleGroup>
                 )}
               />
@@ -160,46 +220,107 @@ export function AddProductModal({
               <Label className="text-background text-xl font-bold pb-2">
                 Tamaño
               </Label>
+
               <div className="flex justify-start text-background font-bold">
-                <Controller
-                  name="size"
-                  control={control}
-                  render={({ field }) => (
-                    <RadioGroup
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    >
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="sencilla" id="r1" />
-                        <Label htmlFor="r1">Sencilla</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="doble" id="r2" />
-                        <Label htmlFor="r2">Doble</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="triple" id="r3" />
-                        <Label htmlFor="r3">Triple</Label>
-                      </div>
-                    </RadioGroup>
-                  )}
-                />
+                {(() => {
+                  const subcategorySizes =
+                    selectedSubcategory?.subcategorySize || [];
+
+                  if (subcategorySizes.length === 0) {
+                    return (
+                      <p className="text-background text-sm italic mt-2">
+                        No hay tamaños disponibles para esta subcategoría.
+                      </p>
+                    );
+                  }
+
+                  return (
+                    <Controller
+                      name="size"
+                      control={control}
+                      render={({ field }) => (
+                        <RadioGroup
+                          value={field.value?.id?.toString()}
+                          onValueChange={(value) => {
+                            const selectedSize = subcategorySizes.find(
+                              (size) => size.id.toString() === value
+                            );
+                            if (selectedSize) {
+                              field.onChange(selectedSize);
+                            }
+                          }}
+                        >
+                          {subcategorySizes.map((size) => (
+                            <div
+                              key={size.id}
+                              className="flex items-center space-x-2"
+                            >
+                              <RadioGroupItem
+                                value={size.id.toString()}
+                                id={`size-${size.id}`}
+                              />
+                              <Label htmlFor={`size-${size.id}`}>
+                                {capitalize(size.unitAbbreviation)} (
+                                {size.quantity})
+                              </Label>
+                            </div>
+                          ))}
+                        </RadioGroup>
+                      )}
+                    />
+                  );
+                })()}
               </div>
             </div>
+
             <div className="flex-[2]">
               <h2 className="text-background text-lg sm:text-xl font-bold pb-1">
-                Ingrediente por defecto
+                Ingredientes por defecto
               </h2>
-              <Controller
-                name="defaultIngredients"
-                control={control}
-                render={({ field }) => (
-                  <MultipleSelectorDemo
-                    value={field.value || []}
-                    onChange={field.onChange}
+              {selectedSubcategory &&
+                selectedSubcategory.defaultIngredients?.length > 0 && (
+                  <Controller
+                    name="defaultIngredients"
+                    control={control}
+                    render={({ field }) => {
+                      /** const ingredientOptions =
+                        selectedSubcategory?.defaultIngredients.map(
+                          (ingredient) => ({
+                            label: ingredient.name,
+                            value: ingredient.id.toString(),
+                          })
+                        ) ?? []; */
+                      const ingredientOptions =
+                        selectedSubcategory.defaultIngredients ?? [];
+
+                      return (
+                        <MultipleSelectorDemo
+                          /**value={
+                            Array.isArray(field.value)
+                              ? field.value.map((v) => v.toString())
+                              : []
+                          }*/
+                          value={
+                            Array.isArray(field.value)
+                              ? field.value.map((v) =>
+                                  typeof v === "number" ? v.toString() : v
+                                )
+                              : []
+                          }
+                          onChange={(selectedIds: string[]) => {
+                            field.onChange(selectedIds);
+                          }}
+                          options={ingredientOptions.map((ingredient) => ({
+                            label: ingredient.name ?? "Sin nombre",
+                            value: ingredient.id.toString(),
+                          }))}
+                          //onChange={field.onChange}
+                          //options={ingredientOptions}
+                        />
+                      );
+                    }}
                   />
                 )}
-              />
             </div>
           </div>
 

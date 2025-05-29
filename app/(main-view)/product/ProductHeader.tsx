@@ -3,16 +3,21 @@ import React, { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { Cross, SearchIcon } from "lucide-react";
-import { columns } from "@/components/product/columns";
-import { translateCategory } from "@/components/product/translations";
 import { AddProductModal } from "@/app/(main-view)/product/AddProductModal";
+import { Category, Subcategory } from "@/types/Category";
+import { capitalize } from "@/types/String";
+import { columns } from "@/components/products/columns";
 
 export function ProductHeader({
   placeholder = "Buscar",
   categories,
+  subcategories,
+  selectedId,
 }: {
   placeholder?: string;
-  categories: string[];
+  categories: Category[];
+  subcategories: Subcategory[];
+  selectedId?: number;
 }) {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
@@ -83,8 +88,8 @@ export function ProductHeader({
           >
             <option value="">Categorías</option>
             {categories.map((category, i) => (
-              <option key={i} value={category}>
-                {translateCategory(category)}
+              <option key={category.id} value={category.name}>
+                {capitalize(category.name)}
               </option>
             ))}
           </select>
@@ -119,6 +124,8 @@ export function ProductHeader({
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         categories={categories}
+        subcategories={subcategories}
+        productId={selectedId}
         //onCategoryChange={}
       />
     </>

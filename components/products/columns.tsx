@@ -1,6 +1,5 @@
 "use client";
 
-import { translateCategory } from "@/components/product/translations";
 import { Column } from "@/components/data-table";
 import { Product } from "@/types/Product";
 import { Pencil, StickyNote } from "lucide-react";
@@ -17,8 +16,14 @@ export const columns: Column<Product>[] = [
   },
   {
     label: "Categoría",
-    field: "productCategory",
-    render: (value) => translateCategory(value as string),
+    field: "category",
+    render: (value) => {
+      if (typeof value === "object" && value !== null && "name" in value) {
+        const name = (value as { name: string }).name;
+        return name.charAt(0).toUpperCase() + name.slice(1);
+      }
+      return "Sin categoría";
+    },
   },
   {
     label: "Precio unitario",

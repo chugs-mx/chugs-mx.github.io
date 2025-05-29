@@ -1,4 +1,4 @@
-import {getProducts, getProductsCategories, deleteProductById} from "@/app/apiSpring/product-api";
+import {getProducts, getProductsCategories, deleteProductById,  getProductSubcategories} from "@/app/apiSpring/product-api";
 import {Product} from "@/types/Product";
 
 type ProductResponse = {
@@ -46,4 +46,14 @@ export async function fetchCategories() {
         console.error("Error fetching categories:", e);
         throw new Error("Error fetching categories");
     }
+}
+
+export async function fetchSubcategories() {
+  try {
+    const res = await getProductSubcategories();
+    return res.data;
+  } catch (e) {
+    console.error("Error fetching subcategories:", e);
+    throw new Error("Error fetching subcategories");
+  }
 }

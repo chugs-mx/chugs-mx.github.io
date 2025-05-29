@@ -1,24 +1,18 @@
 import React from "react";
 import MultipleSelector, { Option } from "@/components/ui/multiple-selector";
 
-const OPTIONS: Option[] = [
-  { label: "Jitomate", value: "jitomate" },
-  { label: "Lechuga", value: "lechuga" },
-  { label: "Cebolla", value: "cebolla" },
-  { label: "Mostaza", value: "mostaza" },
-  { label: "Catsup", value: "catsup" },
-];
-
 interface MultipleSelectorDemoProps {
   value: string[];
   onChange: (value: string[]) => void;
+  options: Option[]; 
 }
 
 const MultipleSelectorDemo: React.FC<MultipleSelectorDemoProps> = ({
   value,
   onChange,
+  options,
 }) => {
-  const selectedOptions: Option[] = OPTIONS.filter((option) =>
+  const selectedOptions: Option[] = options.filter((option) =>
     value.includes(option.value)
   );
 
@@ -31,7 +25,7 @@ const MultipleSelectorDemo: React.FC<MultipleSelectorDemoProps> = ({
       <MultipleSelector
         value={selectedOptions}
         onChange={handleChange}
-        defaultOptions={OPTIONS}
+        defaultOptions={options}
         placeholder="Selecciona los ingredientes"
         emptyIndicator={
           <p className="text-center text-lg leading-10 ">no results found.</p>

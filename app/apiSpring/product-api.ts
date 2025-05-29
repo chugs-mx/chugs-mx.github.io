@@ -1,5 +1,5 @@
 import apiSpring from "@/app/apiSpring/back-api"
-import page from "../dev/page"
+import  { Ingredient } from "@/types/Category";
 
 const PATH = "/products"
 
@@ -69,10 +69,10 @@ type GetProductsParams = {
         name: string;
         description?: string;
         price: number;
-        category: string;
-        types: string[];
-        size: string;
-        defaultIngredients?: string[];
+        categoryId: number;
+        subcategoryId: number;
+        sizeId?: number;
+        defaultIngredients?: Ingredient[];     
     };
 
     const postJsonProduct = async (data: NewProductData): Promise<any> => {
@@ -98,11 +98,19 @@ type GetProductsParams = {
         })
     }
 
+    const getProductSubcategories = () => {
+        return apiSpring({
+            url: `${PATH}/subcategories`,
+            method: "GET"  
+        })
+    }
+
 
     export{
         getProducts,
         getProductsCategories,
         deleteProductById,
         postJsonProduct,
-        putJsonProduct
+        putJsonProduct,
+        getProductSubcategories
     }
